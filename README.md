@@ -328,8 +328,8 @@ To generate a new synthetic cohort, run EDA, train all models with hyperparamete
 ```powershell
 .\backend\.venv\Scripts\Activate.ps1
 
-# 1. Synthesize student records (e.g., 20,000 for quick run or 200,000 for full scale)
-python -m backend.ml.generate_data --rows 20000
+# 1. Synthesize student records (e.g. 200,000 for full scale)
+python -m backend.ml.generate_data --rows 200000
 
 # 2. Run Exploratory Data Analysis & generate reports
 python -m backend.ml.eda
