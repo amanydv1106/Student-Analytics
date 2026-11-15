@@ -41,7 +41,16 @@ Built on a synthetic **200,000-student cohort** featuring multi-campus distribut
 
 ## 🚀 Key Highlights & Capabilities
 
-### 1. 🎯 Real-Time Student Predictor
+### 1. 🎓 Dedicated Student Portal & Diagnostic Advisory
+- **Secure Student Authentication**: Complete registration and login system with JWT tokens, PBKDF2 password hashing, and session management.
+- **Marks & Indicators Submission**: Students provide their current internal marks, attendance %, assignment completion, self-study hours, GPA, and LMS activity.
+- **Executive Diagnostic Report**: Generates an intelligent narrative summary of the student's standing and projected semester final exam score.
+- **🌟 What You Excel At ("In Which He Is Best")**: Automatically highlights top strengths (e.g. continuous assessment excellence, lecture presence, submission punctuality).
+- **🎯 What You Need To Prepare ("What He Needs to Prepare")**: Actionable, prioritized improvement checklist before internal/final exams.
+- **📊 5-Dimension Performance Breakdown**: Detailed component ratings across Internal Assessment, Classroom Attendance, Assignments, Study Habit, and Submission Punctuality.
+- **Evaluation History & Print/Export**: Saves diagnostic runs and offers clean one-click report printing for academic counseling sessions.
+
+### 2. 🎯 Real-Time Faculty Predictor
 - Input granular student metrics (attendance, study hours, previous GPA, internal marks, sleep, commute, LMS activity, etc.).
 - Instantly estimates continuous **Final Score (0–100)** and calculates **At-Risk Probability**.
 - Outputs tailored, rule-informed **Key Strengths**, **Risk Factors**, and prioritized **Actionable Interventions** for faculty advisors.

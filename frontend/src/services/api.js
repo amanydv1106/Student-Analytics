@@ -1,13 +1,39 @@
 const BASE_URL = import.meta.env.VITE_API_URL || '';
 
+const TOKEN_KEY = 'student_portal_token';
+const USER_KEY = 'student_portal_user';
+
+export const authStorage = {
+  getToken: () => localStorage.getItem(TOKEN_KEY),
+  setToken: (token) => localStorage.setItem(TOKEN_KEY, token),
+  clearToken: () => {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+  },
+  getUser: () => {
+    try {
+      const u = localStorage.getItem(USER_KEY);
+      return u ? JSON.parse(u) : null;
+    } catch (_) {
+      return null;
+    }
+  },
+  setUser: (user) => localStorage.setItem(USER_KEY, JSON.stringify(user)),
+};
+
 async function fetchJson(endpoint, options = {}) {
   const url = `${BASE_URL}${endpoint}`;
+  const token = authStorage.getToken();
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...options.headers,
+  };
+
   const response = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
     ...options,
+    headers,
   });
 
   if (!response.ok) {
@@ -24,6 +50,29 @@ async function fetchJson(endpoint, options = {}) {
 
 export const api = {
   checkHealth: () => fetchJson('/health'),
+  
+  // Student Authentication
+  register: (studentData) =>
+    fetchJson('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(studentData),
+    }),
+  login: (credentials) =>
+    fetchJson('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(credentials),
+    }),
+  getMe: () => fetchJson('/api/auth/me'),
+
+  // Student Portal Diagnostics
+  generateStudentReport: (reportInput) =>
+    fetchJson('/api/student/report', {
+      method: 'POST',
+      body: JSON.stringify(reportInput),
+    }),
+  getStudentHistory: () => fetchJson('/api/student/history'),
+
+  // ML Platform APIs
   predictStudent: (studentData) =>
     fetchJson('/api/predict', {
       method: 'POST',

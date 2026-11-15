@@ -3,7 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, HTMLResponse
 from backend.app.core.config import APP_TITLE, APP_VERSION, FRONTEND_DIST
-from backend.app.api import routes_predict, routes_models, routes_analytics
+from backend.app.core.database import init_db
+from backend.app.api import routes_predict, routes_models, routes_analytics, routes_auth, routes_student
+
+# Initialize database on startup
+init_db()
 
 app = FastAPI(
     title=APP_TITLE,
@@ -21,6 +25,8 @@ app.add_middleware(
 )
 
 # Register API Routers
+app.include_router(routes_auth.router)
+app.include_router(routes_student.router)
 app.include_router(routes_predict.router)
 app.include_router(routes_models.router)
 app.include_router(routes_analytics.router)
