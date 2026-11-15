@@ -83,11 +83,13 @@ export default function App() {
         {!currentUser && activeTab === 'batch' && <BatchPredictTab />}
       </main>
 
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        onLoginSuccess={handleLoginSuccess}
-      />
+      {authModalOpen && (
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      )}
 
       {!currentUser && (
         <footer style={{ 

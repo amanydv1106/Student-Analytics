@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LogIn, UserPlus, X, AlertCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 import { api, authStorage } from '../services/api';
 
@@ -20,7 +20,40 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   const [regProgram, setRegProgram] = useState('Computer Science');
   const [regSemester, setRegSemester] = useState(4);
 
+  // Clear all form fields completely
+  const resetForms = () => {
+    setLoginEmail('');
+    setLoginPassword('');
+    setRegFullName('');
+    setRegStudentId('');
+    setRegEmail('');
+    setRegPassword('');
+    setRegProgram('Computer Science');
+    setRegSemester(4);
+    setError('');
+    setSuccessMsg('');
+  };
+
+  // Reset form whenever modal opens or closes
+  useEffect(() => {
+    if (isOpen) {
+      resetForms();
+      setMode('login');
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const handleClose = () => {
+    resetForms();
+    onClose();
+  };
+
+  const handleSwitchMode = (newMode) => {
+    setMode(newMode);
+    setError('');
+    setSuccessMsg('');
+  };
 
   async function handleLogin(e) {
     if (e) e.preventDefault();
@@ -32,6 +65,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
       authStorage.setUser(res.user);
       setSuccessMsg('Signed in successfully!');
       setTimeout(() => {
+        resetForms();
         onLoginSuccess(res.user);
         onClose();
       }, 500);
@@ -53,6 +87,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
       authStorage.setUser(res.user);
       setSuccessMsg('Logged in as Demo Student!');
       setTimeout(() => {
+        resetForms();
         onLoginSuccess(res.user);
         onClose();
       }, 500);
@@ -81,6 +116,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
       authStorage.setUser(res.user);
       setSuccessMsg('Account created successfully! Welcome aboard.');
       setTimeout(() => {
+        resetForms();
         onLoginSuccess(res.user);
         onClose();
       }, 600);
@@ -92,20 +128,24 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   }
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(5, 11, 20, 0.85)',
-      backdropFilter: 'blur(8px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 1000,
-      padding: '1rem',
-    }}>
+    <div 
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleClose();
+      }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(5, 11, 20, 0.85)',
+        backdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 1000,
+        padding: '1rem',
+      }}>
       <div style={{
         background: '#111d31',
         border: '1px solid #263750',
@@ -148,7 +188,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             </div>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
+            aria-label="Close modal"
             style={{
               background: 'none',
               border: 'none',
@@ -165,7 +206,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         {/* Tab Switcher */}
         <div style={{ display: 'flex', borderBottom: '1px solid #1f2f47', background: '#0c1626' }}>
           <button
-            onClick={() => { setMode('login'); setError(''); }}
+            onClick={() => handleSwitchMode('login')}
             style={{
               flex: 1,
               padding: '0.875rem',
@@ -185,7 +226,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             <LogIn size={16} /> Sign In
           </button>
           <button
-            onClick={() => { setMode('register'); setError(''); }}
+            onClick={() => handleSwitchMode('register')}
             style={{
               flex: 1,
               padding: '0.875rem',
@@ -253,7 +294,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 <input
                   type="email"
                   required
-                  placeholder="alex.morgan@university.edu"
+                  placeholder="student@university.edu"
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
                   style={{
@@ -347,7 +388,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   gap: '0.5rem',
                 }}
               >
-                <Sparkles size={16} /> ⚡ Quick Demo Student Login (Alex Morgan)
+                <Sparkles size={16} /> ⚡ Quick Demo Student Login
               </button>
             </form>
           ) : (
@@ -359,7 +400,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Alex Morgan"
+                  placeholder="e.g. Student Full Name"
                   value={regFullName}
                   onChange={(e) => setRegFullName(e.target.value)}
                   style={{

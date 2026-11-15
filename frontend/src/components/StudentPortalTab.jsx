@@ -319,7 +319,7 @@ export default function StudentPortalTab({ currentUser, onOpenAuthModal, onLogin
                     gap: '0.4rem',
                   }}
                 >
-                  <Sparkles size={14} /> ⚡ One-Click Demo Student Login (Alex)
+                  <Sparkles size={14} /> ⚡ One-Click Demo Student Login
                 </button>
               </form>
             ) : (
@@ -331,7 +331,7 @@ export default function StudentPortalTab({ currentUser, onOpenAuthModal, onLogin
                   <input
                     type="text"
                     required
-                    placeholder="Alex Morgan"
+                    placeholder="Student Full Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     style={{

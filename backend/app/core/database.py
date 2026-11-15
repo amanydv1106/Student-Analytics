@@ -67,12 +67,15 @@ def init_db():
         """, (
             "demo@student.edu",
             hashed,
-            "Alex Morgan",
+            "Demo Student",
             "STU-2026-0842",
             "Computer Science",
             4,
             3
         ))
+        conn.commit()
+    else:
+        cursor.execute("UPDATE users SET full_name = 'Demo Student' WHERE email = 'demo@student.edu'")
         conn.commit()
 
     conn.commit()

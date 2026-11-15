@@ -75,4 +75,4 @@ def test_demo_student_login():
     res = client.post("/api/auth/login", json={"email": "demo@student.edu", "password": "demo1234"})
     assert res.status_code == 200
     data = res.json()
-    assert data["user"]["full_name"] == "Alex Morgan"
+    assert data["user"]["full_name"] == "Demo Student"
