@@ -37,21 +37,21 @@ export default function LeaderboardTab() {
         <div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Trophy size={22} color="#fbbf24" />
-            Machine Learning Model Comparison & Fusion Benchmarks
+            Model Leaderboard
           </h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-            Systematic benchmark of baseline linear models, nonlinear tree ensembles, hyperparameter-tuned estimators, and meta-model fusion.
+            Performance comparison across all tested machine learning models.
           </p>
         </div>
 
         {/* Best Model Badges */}
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <div style={{ background: 'var(--bg-input)', padding: '0.5rem 0.85rem', borderRadius: '0.65rem', border: '1px solid var(--border-card)' }}>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>Best Regressor</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>Best Score Model</span>
             <strong style={{ fontSize: '0.85rem', color: '#38bdf8' }}>{data.best_regression_model}</strong>
           </div>
           <div style={{ background: 'var(--bg-input)', padding: '0.5rem 0.85rem', borderRadius: '0.65rem', border: '1px solid var(--border-card)' }}>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>Best Classifier</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', display: 'block' }}>Best Risk Model</span>
             <strong style={{ fontSize: '0.85rem', color: '#34d399' }}>{data.best_classification_model}</strong>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function LeaderboardTab() {
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
           <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--border-card)', background: 'var(--bg-card-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#93c5fd' }}>
-              Final Score Prediction (Regression)
+              Score Prediction Models
             </h3>
             <span className="badge badge-blue">Ranked by RMSE</span>
           </div>
@@ -102,7 +102,7 @@ export default function LeaderboardTab() {
         <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
           <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--border-card)', background: 'var(--bg-card-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#34d399' }}>
-              At-Risk Early-Warning (Classification)
+              Risk Prediction Models
             </h3>
             <span className="badge badge-green">Ranked by F1</span>
           </div>

@@ -755,11 +755,11 @@ export default function StudentPortalTab({ currentUser, onOpenAuthModal, onLogin
             >
               {calculating ? (
                 <>
-                  <RefreshCw className="animate-spin" size={16} /> Generating Diagnostic Report...
+                  <RefreshCw className="animate-spin" size={16} /> Calculating...
                 </>
               ) : (
                 <>
-                  <Sparkles size={16} /> Calculate Performance Report
+                  <Sparkles size={16} /> Calculate Score
                 </>
               )}
             </button>

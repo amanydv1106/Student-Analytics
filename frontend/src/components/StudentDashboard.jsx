@@ -217,7 +217,7 @@ export default function StudentDashboard({
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
               <FileText size={16} />
-              <span>Summary Generation</span>
+              <span>Calculate Score</span>
             </div>
             <ChevronRight size={14} />
           </button>
@@ -249,31 +249,6 @@ export default function StudentDashboard({
                 {history.length}
               </span>
             )}
-          </button>
-
-          <button
-            onClick={onSwitchToPublic}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '0.75rem 1rem',
-              borderRadius: '8px',
-              border: '1px solid transparent',
-              background: 'transparent',
-              color: '#94a3b8',
-              fontWeight: 500,
-              fontSize: '0.8125rem',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'all 0.2s',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-              <Layers size={16} />
-              <span>Explore ML Models</span>
-            </div>
-            <ChevronRight size={14} />
           </button>
         </div>
 
@@ -355,10 +330,10 @@ export default function StudentDashboard({
             }}>
               <div>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
-                  Academic Performance & Summary Generation
+                  Performance Report
                 </h2>
                 <p style={{ margin: '0.25rem 0 0', fontSize: '0.8125rem', color: '#94a3b8' }}>
-                  Input your subject marks, attendance, and coursework to generate your comprehensive performance report
+                  Enter your marks and academic details to generate your performance report
                 </p>
               </div>
 
@@ -781,11 +756,11 @@ export default function StudentDashboard({
                   >
                     {calculating ? (
                       <>
-                        <RefreshCw className="animate-spin" size={16} /> Computing Diagnostic Report...
+                        <RefreshCw className="animate-spin" size={16} /> Calculating...
                       </>
                     ) : (
                       <>
-                        <Sparkles size={16} /> Calculate Performance Report
+                        <Sparkles size={16} /> Calculate Score
                       </>
                     )}
                   </button>
@@ -806,7 +781,7 @@ export default function StudentDashboard({
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
                         <div>
                           <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-                            Predicted Final Exam Standing
+                            Predicted Final Score
                           </span>
                           <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginTop: '0.25rem' }}>
                             <span style={{ fontSize: '2.25rem', fontWeight: 800, color: '#f8fafc', fontFamily: 'monospace' }}>
@@ -850,7 +825,7 @@ export default function StudentDashboard({
                         color: '#e2e8f0',
                       }}>
                         <strong style={{ color: '#60a5fa', display: 'block', marginBottom: '0.25rem' }}>
-                          Performance Summary Report:
+                          Performance Summary:
                         </strong>
                         {report.executive_summary}
                       </div>
@@ -966,7 +941,7 @@ export default function StudentDashboard({
                     <GraduationCap size={36} style={{ color: '#64748b', margin: '0 auto 0.75rem' }} />
                     <h4 style={{ color: '#f8fafc', margin: '0 0 0.5rem', fontSize: '1rem' }}>Ready to Calculate</h4>
                     <p style={{ color: '#8899b5', fontSize: '0.8125rem', margin: 0 }}>
-                      Adjust your marks on the left and click "Calculate Performance Report" to generate your detailed diagnostic summary.
+                      Enter your marks on the left and click "Calculate Score" to view your summary report.
                     </p>
                   </div>
                 )}
@@ -986,7 +961,7 @@ export default function StudentDashboard({
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
-                  Your Diagnostic Report History
+                  Your Report History
                 </h2>
                 <p style={{ margin: '0.25rem 0 0', fontSize: '0.8125rem', color: '#94a3b8' }}>
                   Review your past academic evaluations and track your score progression over time

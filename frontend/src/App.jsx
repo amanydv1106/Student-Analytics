@@ -68,22 +68,21 @@ export default function App() {
       />
 
       <main className="container" style={{ flex: 1, padding: '1.5rem', width: '100%', maxWidth: '1240px', margin: '0 auto', boxSizing: 'border-box' }}>
-        {/* If activeTab is 'dashboard' and user is logged in: show dedicated StudentDashboard */}
-        {activeTab === 'dashboard' && currentUser && (
+        {/* If user is logged in: show dedicated StudentDashboard */}
+        {currentUser && (
           <StudentDashboard
             currentUser={currentUser}
             onLogout={handleLogout}
-            onSwitchToPublic={() => setActiveTab('predict')}
           />
         )}
 
-        {/* Public ML Models & Tools */}
-        {activeTab === 'predict' && <PredictorTab presets={presets} />}
-        {activeTab === 'simulate' && <SimulatorTab />}
-        {activeTab === 'leaderboard' && <LeaderboardTab />}
-        {activeTab === 'domain' && <DomainGenTab />}
-        {activeTab === 'analytics' && <AnalyticsTab />}
-        {activeTab === 'batch' && <BatchPredictTab />}
+        {/* Public ML Models & Tools (only shown when not logged in) */}
+        {!currentUser && activeTab === 'predict' && <PredictorTab presets={presets} />}
+        {!currentUser && activeTab === 'simulate' && <SimulatorTab />}
+        {!currentUser && activeTab === 'leaderboard' && <LeaderboardTab />}
+        {!currentUser && activeTab === 'domain' && <DomainGenTab />}
+        {!currentUser && activeTab === 'analytics' && <AnalyticsTab />}
+        {!currentUser && activeTab === 'batch' && <BatchPredictTab />}
       </main>
 
       <AuthModal
@@ -92,21 +91,23 @@ export default function App() {
         onLoginSuccess={handleLoginSuccess}
       />
 
-      <footer style={{ 
-        borderTop: '1px solid #1a273c', 
-        background: '#091220', 
-        padding: '1.25rem 0', 
-        marginTop: 'auto', 
-        textAlign: 'center', 
-        fontSize: '0.75rem', 
-        color: '#64748b' 
-      }}>
-        <div className="container">
-          <p style={{ margin: 0 }}>
-            <strong>Student Success AI</strong> • MCA Final-Year Project • Academic Performance Prediction & Early-Warning Diagnostic System
-          </p>
-        </div>
-      </footer>
+      {!currentUser && (
+        <footer style={{ 
+          borderTop: '1px solid #1a273c', 
+          background: '#091220', 
+          padding: '1.25rem 0', 
+          marginTop: 'auto', 
+          textAlign: 'center', 
+          fontSize: '0.75rem', 
+          color: '#64748b' 
+        }}>
+          <div className="container">
+            <p style={{ margin: 0 }}>
+              <strong>Student Success AI</strong>
+            </p>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

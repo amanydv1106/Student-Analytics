@@ -27,10 +27,10 @@ export default function AnalyticsTab() {
       <div className="card">
         <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <BarChart3 size={22} color="#38bdf8" />
-          Exploratory Data Analysis (EDA) & Dataset Profile
+          Dataset Overview & Stats
         </h2>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-          Detailed breakdown of the 200,000 synthetic student cohort, feature statistics, missingness rates, and target distributions.
+          Overview of student cohort data, feature statistics, and score distributions.
         </p>
       </div>
 

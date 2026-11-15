@@ -7,8 +7,7 @@ import {
   BarChart3, 
   Users, 
   LogIn,
-  LogOut,
-  LayoutDashboard
+  LogOut
 } from 'lucide-react';
 
 export default function Header({ 
@@ -19,11 +18,11 @@ export default function Header({
   onLogout 
 }) {
   const publicNavItems = [
-    { id: 'predict', label: 'Predictor & Early-Warning', icon: GraduationCap },
-    { id: 'simulate', label: 'What-If Simulator', icon: Sliders },
-    { id: 'leaderboard', label: 'Model Leaderboards', icon: Trophy },
-    { id: 'domain', label: 'Domain Generalization', icon: Globe2 },
-    { id: 'analytics', label: 'Dataset & EDA', icon: BarChart3 },
+    { id: 'predict', label: 'Score Predictor', icon: GraduationCap },
+    { id: 'simulate', label: 'Score Simulator', icon: Sliders },
+    { id: 'leaderboard', label: 'Model Rankings', icon: Trophy },
+    { id: 'domain', label: 'Domain Testing', icon: Globe2 },
+    { id: 'analytics', label: 'Dataset & Stats', icon: BarChart3 },
     { id: 'batch', label: 'Batch Predictor', icon: Users },
   ];
 
@@ -70,9 +69,6 @@ export default function Header({
             >
               Student Success AI
             </h1>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: '0.125rem 0 0' }}>
-              Academic Performance Prediction & Early-Warning Diagnostic System
-            </p>
           </div>
         </div>
 
@@ -80,28 +76,6 @@ export default function Header({
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {currentUser ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-              
-              {/* Dashboard vs Public Mode Switcher */}
-              <button
-                onClick={() => setActiveTab(activeTab === 'dashboard' ? 'predict' : 'dashboard')}
-                style={{
-                  background: activeTab === 'dashboard' ? 'rgba(37, 99, 235, 0.2)' : 'rgba(30, 41, 59, 0.8)',
-                  color: activeTab === 'dashboard' ? '#60a5fa' : '#94a3b8',
-                  border: activeTab === 'dashboard' ? '1px solid #3b82f6' : '1px solid #334155',
-                  padding: '0.45rem 0.875rem',
-                  borderRadius: '8px',
-                  fontSize: '0.8125rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.4rem',
-                }}
-              >
-                <LayoutDashboard size={15} />
-                {activeTab === 'dashboard' ? 'View Public Models' : 'My Student Dashboard'}
-              </button>
-
               {/* Student Profile Pill */}
               <div style={{
                 display: 'flex',
@@ -182,8 +156,8 @@ export default function Header({
         </div>
       </div>
 
-      {/* Navigation tabs: Shown in public view or when exploring models */}
-      {(!currentUser || activeTab !== 'dashboard') && (
+      {/* Navigation tabs: Shown only when student is NOT logged in */}
+      {!currentUser && (
         <div style={{ borderTop: '1px solid rgba(28, 46, 76, 0.5)' }}>
           <div className="container" style={{ padding: '0 1.5rem', display: 'flex', gap: '0.5rem', overflowX: 'auto' }}>
             {publicNavItems.map((tab) => {

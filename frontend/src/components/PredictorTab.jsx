@@ -86,10 +86,10 @@ export default function PredictorTab({ presets, initialStudent }) {
         <div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Sparkles size={20} color="#38bdf8" />
-            Student Academic & Risk Predictor
+            Score Predictor
           </h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-            Enter student characteristics below or choose a pre-configured scenario profile.
+            Enter student details below or select a sample student.
           </p>
         </div>
 
@@ -328,7 +328,7 @@ export default function PredictorTab({ presets, initialStudent }) {
             style={{ marginTop: '0.5rem', width: '100%' }}
           >
             {loading ? <RefreshCw className="animate-spin" size={18} /> : <Send size={18} />}
-            {loading ? 'Evaluating Model Inference...' : 'Calculate Score & Early-Warning Risk'}
+            {loading ? 'Calculating...' : 'Calculate Score'}
           </button>
         </div>
 
@@ -340,7 +340,7 @@ export default function PredictorTab({ presets, initialStudent }) {
               <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem', background: 'linear-gradient(145deg, #0e1a30, #132442)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    Model Inference Output
+                    Predicted Score
                   </span>
                   <span
                     className="badge"
@@ -373,7 +373,7 @@ export default function PredictorTab({ presets, initialStudent }) {
                       {result.predicted_score}
                     </span>
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>
-                      / 100 pts
+                      / 100
                     </span>
                   </div>
                 </div>
@@ -383,14 +383,14 @@ export default function PredictorTab({ presets, initialStudent }) {
                     Grade: {result.score_grade}
                   </h4>
                   <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
-                    Regression model + early-warning risk probability ensemble
+                    Calculated based on student details
                   </p>
                 </div>
 
                 {/* Sub-Metrics Cards */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', width: '100%' }}>
                   <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: '0.75rem', border: '1px solid var(--border-card)', textAlign: 'left' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Classifier At-Risk</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Risk Probability</span>
                     <strong style={{ fontSize: '1.25rem', color: '#f8fafc' }}>
                       {(result.at_risk_probability * 100).toFixed(1)}%
                     </strong>
@@ -398,11 +398,11 @@ export default function PredictorTab({ presets, initialStudent }) {
                   </div>
 
                   <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: '0.75rem', border: '1px solid var(--border-card)', textAlign: 'left' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Hybrid Risk Index</span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Overall Risk</span>
                     <strong style={{ fontSize: '1.25rem', color: result.risk_color }}>
                       {(result.hybrid_risk_index * 100).toFixed(1)}%
                     </strong>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', display: 'block' }}>0.7×clf + 0.3×(1-score)</span>
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', display: 'block' }}>Combined score</span>
                   </div>
                 </div>
               </div>
@@ -411,7 +411,7 @@ export default function PredictorTab({ presets, initialStudent }) {
               <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                 <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#34d399', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <CheckCircle2 size={16} />
-                  Academic Strengths Identified
+                  Key Strengths
                 </h4>
                 {result.key_strengths.length > 0 ? (
                   <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
@@ -429,7 +429,7 @@ export default function PredictorTab({ presets, initialStudent }) {
                   <>
                     <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#f87171', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.5rem' }}>
                       <AlertTriangle size={16} />
-                      Academic Risk Triggers
+                      Areas for Improvement
                     </h4>
                     <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                       {result.risk_factors.map((r, i) => (
@@ -446,7 +446,7 @@ export default function PredictorTab({ presets, initialStudent }) {
               <div className="card" style={{ background: 'rgba(56, 189, 248, 0.05)', borderColor: 'rgba(56, 189, 248, 0.25)' }}>
                 <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
                   <Lightbulb size={16} />
-                  Early-Warning Intervention Advisory
+                  Recommendations
                 </h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
                   {result.recommendations.map((rec, i) => (

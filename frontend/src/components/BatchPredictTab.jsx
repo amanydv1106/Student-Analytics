@@ -64,22 +64,22 @@ export default function BatchPredictTab() {
         <div>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Users size={22} color="#38bdf8" />
-            Cohort Batch Prediction & Export
+            Batch Score Predictor
           </h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-            Process cohorts of students in one pass to generate institutional early-warning rosters and risk reports.
+            Process multiple students at once and download the results as a CSV file.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button className="btn btn-primary" onClick={runBatch} disabled={loading}>
             {loading ? <RefreshCw className="animate-spin" size={17} /> : <Play size={17} />}
-            {loading ? 'Evaluating Cohort...' : 'Run Batch Analysis'}
+            {loading ? 'Processing...' : 'Run Batch Prediction'}
           </button>
           {response && (
             <button className="btn btn-secondary" onClick={exportCSV}>
               <Download size={17} />
-              Export CSV Report
+              Download CSV
             </button>
           )}
         </div>

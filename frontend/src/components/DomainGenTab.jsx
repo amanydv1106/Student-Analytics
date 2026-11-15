@@ -22,10 +22,10 @@ export default function DomainGenTab() {
       <div className="card">
         <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Globe2 size={22} color="#38bdf8" />
-          Held-Out Institution Domain Generalization
+          Cross-Campus Testing
         </h2>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-          Assesses whether the machine learning model can generalize to completely unseen academic environments without learning institutional bias.
+          Tests how well the model predicts scores across different institutions without campus bias.
         </p>
       </div>
 
@@ -44,7 +44,7 @@ export default function DomainGenTab() {
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-input)', padding: '0.5rem 1rem', borderRadius: '9999px', border: '1px solid var(--border-card)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            Zero-Shot Cross-Campus Transfer <ArrowRight size={16} color="#38bdf8" />
+            Cross-Campus Testing <ArrowRight size={16} color="#38bdf8" />
           </div>
         </div>
 
@@ -55,7 +55,7 @@ export default function DomainGenTab() {
             39,916 test students (Strictly Unseen)
           </p>
           <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)', display: 'block', marginTop: '0.5rem' }}>
-            Evaluates distribution shift resilience
+            Tested on new college data
           </span>
         </div>
       </div>

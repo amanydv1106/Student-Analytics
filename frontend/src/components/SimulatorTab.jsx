@@ -66,10 +66,10 @@ export default function SimulatorTab({ initialStudent }) {
       <div className="card">
         <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Sliders size={20} color="#38bdf8" />
-          Interactive "What-If" Academic Simulator
+          Score Simulator
         </h2>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-          Model how targeted interventions (such as raising attendance, dedicating study hours, or eliminating missed deadlines) will alter student success and lower at-risk early warning probabilities.
+          See how improving attendance, study hours, and assignment deadlines can raise your predicted score.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function SimulatorTab({ initialStudent }) {
         {/* Sliders Card */}
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#93c5fd', borderBottom: '1px solid var(--border-card)', paddingBottom: '0.75rem' }}>
-            Adjustable Intervention Levers
+            Adjust Factors
           </h3>
 
           {/* Attendance slider */}
