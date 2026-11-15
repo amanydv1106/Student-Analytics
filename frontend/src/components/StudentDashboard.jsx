@@ -9,43 +9,49 @@ import { api } from '../services/api';
 
 export default function StudentDashboard({ 
   currentUser, 
-  onLogout,
-  onSwitchToPublic 
+  onLogout 
 }) {
   const [sidebarTab, setSidebarTab] = useState('summary'); // 'summary' | 'history'
 
-  // Subject-wise marks state: allows students to add subjects with gained and out-of marks
-  const [subjects, setSubjects] = useState([
-    { id: 1, name: 'Core Subject 1 (Theory)', gained: 42, total: 50 },
-    { id: 2, name: 'Core Subject 2 (Algorithms)', gained: 44, total: 50 },
-    { id: 3, name: 'Practical Lab / Coursework', gained: 45, total: 50 },
-  ]);
+  const isDemo = currentUser?.email === 'demo@student.edu';
+
+  // Subject-wise marks state: clean starter inputs for regular students, demo values for demo account
+  const [subjects, setSubjects] = useState(
+    isDemo ? [
+      { id: 1, name: 'Core Subject 1 (Theory)', gained: 42, total: 50 },
+      { id: 2, name: 'Core Subject 2 (Algorithms)', gained: 44, total: 50 },
+      { id: 3, name: 'Practical Lab / Coursework', gained: 45, total: 50 },
+    ] : [
+      { id: 1, name: 'Subject 1', gained: '', total: 50 },
+      { id: 2, name: 'Subject 2', gained: '', total: 50 },
+      { id: 3, name: 'Subject 3', gained: '', total: 50 },
+    ]
+  );
 
   // Overall component inputs with gained and out-of fields
-  const [attendanceAttended, setAttendanceAttended] = useState(42);
+  const [attendanceAttended, setAttendanceAttended] = useState(isDemo ? 42 : '');
   const [attendanceTotal, setAttendanceTotal] = useState(50);
 
-  const [assignmentSubmitted, setAssignmentSubmitted] = useState(9);
+  const [assignmentSubmitted, setAssignmentSubmitted] = useState(isDemo ? 9 : '');
   const [assignmentTotal, setAssignmentTotal] = useState(10);
 
-  const [studyHoursPerDay, setStudyHoursPerDay] = useState(4.5);
-  const [gpaGained, setGpaGained] = useState(7.8);
-  const [lmsLogins, setLmsLogins] = useState(25);
+  const [studyHoursPerDay, setStudyHoursPerDay] = useState(isDemo ? 4.5 : '');
+  const [gpaGained, setGpaGained] = useState(isDemo ? 7.8 : '');
+  const [lmsLogins, setLmsLogins] = useState(isDemo ? 25 : '');
   const [missedDeadlines, setMissedDeadlines] = useState(0);
   const [sleepHours, setSleepHours] = useState(7.0);
   const [commuteMinutes, setCommuteMinutes] = useState(30.0);
 
-  // Report state
+  // Report state: ALWAYS starts as null for fresh session so no dummy report is shown
   const [calculating, setCalculating] = useState(false);
   const [report, setReport] = useState(null);
   const [history, setHistory] = useState([]);
   const [error, setError] = useState('');
 
-  // Load history on mount
+  // Load ONLY past history on mount (NEVER automatically calculate report)
   useEffect(() => {
     if (currentUser) {
       loadHistory();
-      handleCalculate();
     }
   }, [currentUser]);
 
@@ -56,26 +62,63 @@ export default function StudentDashboard({
     } catch (_) {}
   }
 
+  // Populate sample values for 1-click preview
+  const handleFillSampleData = () => {
+    setSubjects([
+      { id: 1, name: 'Core Subject 1 (Theory)', gained: 42, total: 50 },
+      { id: 2, name: 'Core Subject 2 (Algorithms)', gained: 44, total: 50 },
+      { id: 3, name: 'Practical Lab / Coursework', gained: 45, total: 50 },
+    ]);
+    setAttendanceAttended(42);
+    setAttendanceTotal(50);
+    setAssignmentSubmitted(9);
+    setAssignmentTotal(10);
+    setStudyHoursPerDay(4.5);
+    setGpaGained(7.8);
+    setLmsLogins(25);
+    setMissedDeadlines(0);
+    setError('');
+  };
+
+  // Reset form to blank
+  const handleClearForm = () => {
+    setSubjects([
+      { id: 1, name: 'Subject 1', gained: '', total: 50 },
+      { id: 2, name: 'Subject 2', gained: '', total: 50 },
+      { id: 3, name: 'Subject 3', gained: '', total: 50 },
+    ]);
+    setAttendanceAttended('');
+    setAttendanceTotal(50);
+    setAssignmentSubmitted('');
+    setAssignmentTotal(10);
+    setStudyHoursPerDay('');
+    setGpaGained('');
+    setLmsLogins('');
+    setMissedDeadlines(0);
+    setReport(null);
+    setError('');
+  };
+
   // Calculate internal marks % from subjects
   const totalSubjectGained = subjects.reduce((sum, s) => sum + Number(s.gained || 0), 0);
   const totalSubjectMax = subjects.reduce((sum, s) => sum + Number(s.total || 0), 0);
-  const computedInternalMarks = totalSubjectMax > 0 
+  const computedInternalMarks = totalSubjectMax > 0 && totalSubjectGained > 0
     ? Math.min(100, Math.max(0, (totalSubjectGained / totalSubjectMax) * 100))
-    : 75.0;
+    : (totalSubjectGained > 0 ? 75.0 : 0);
 
   // Calculate attendance %
-  const computedAttendancePct = attendanceTotal > 0
-    ? Math.min(100, Math.max(0, (attendanceAttended / attendanceTotal) * 100))
-    : 80.0;
+  const computedAttendancePct = attendanceTotal > 0 && attendanceAttended !== ''
+    ? Math.min(100, Math.max(0, (Number(attendanceAttended) / Number(attendanceTotal)) * 100))
+    : 0;
 
   // Calculate assignment %
-  const computedAssignmentPct = assignmentTotal > 0
-    ? Math.min(100, Math.max(0, (assignmentSubmitted / assignmentTotal) * 100))
-    : 85.0;
+  const computedAssignmentPct = assignmentTotal > 0 && assignmentSubmitted !== ''
+    ? Math.min(100, Math.max(0, (Number(assignmentSubmitted) / Number(assignmentTotal)) * 100))
+    : 0;
 
   function handleAddSubject() {
     const nextId = subjects.length > 0 ? Math.max(...subjects.map(s => s.id)) + 1 : 1;
-    setSubjects([...subjects, { id: nextId, name: `Subject ${nextId}`, gained: 40, total: 50 }]);
+    setSubjects([...subjects, { id: nextId, name: `Subject ${nextId}`, gained: '', total: 50 }]);
   }
 
   function handleRemoveSubject(id) {
@@ -90,18 +133,24 @@ export default function StudentDashboard({
   async function handleCalculate(e) {
     if (e) e.preventDefault();
     setError('');
+
+    if (totalSubjectGained === 0 && (attendanceAttended === '' || Number(attendanceAttended) === 0)) {
+      setError('Please enter your subject marks or attendance before calculating.');
+      return;
+    }
+
     setCalculating(true);
     try {
       const payload = {
-        internal_marks: Number(computedInternalMarks.toFixed(1)),
-        attendance_pct: Number(computedAttendancePct.toFixed(1)),
-        assignment_completion_pct: Number(computedAssignmentPct.toFixed(1)),
-        study_hours_per_day: Number(studyHoursPerDay),
-        previous_gpa: Number(gpaGained),
-        lms_logins: Number(lmsLogins),
-        missed_deadlines: Number(missedDeadlines),
-        sleep_hours: Number(sleepHours),
-        commute_minutes: Number(commuteMinutes),
+        internal_marks: Number((computedInternalMarks || 75.0).toFixed(1)),
+        attendance_pct: Number((computedAttendancePct || 80.0).toFixed(1)),
+        assignment_completion_pct: Number((computedAssignmentPct || 85.0).toFixed(1)),
+        study_hours_per_day: Number(studyHoursPerDay || 3.5),
+        previous_gpa: Number(gpaGained || 7.0),
+        lms_logins: Number(lmsLogins || 20),
+        missed_deadlines: Number(missedDeadlines || 0),
+        sleep_hours: Number(sleepHours || 7.0),
+        commute_minutes: Number(commuteMinutes || 30.0),
         internet_access: 'Reliable',
         financial_pressure: 'Low',
         part_time_job: 'No',
@@ -125,6 +174,27 @@ export default function StudentDashboard({
         setReport(res);
         setSidebarTab('summary');
       }
+    } catch (_) {}
+  }
+
+  async function handleDeleteReport(e, reportId) {
+    e.stopPropagation();
+    if (!window.confirm('Are you sure you want to delete this report from history?')) return;
+    try {
+      await api.deleteStudentReport(reportId);
+      if (report && report.report_id === reportId) {
+        setReport(null);
+      }
+      loadHistory();
+    } catch (_) {}
+  }
+
+  async function handleClearAllHistory() {
+    if (!window.confirm('Are you sure you want to clear all report history?')) return;
+    try {
+      await api.clearStudentHistory();
+      setReport(null);
+      loadHistory();
     } catch (_) {}
   }
 
@@ -369,13 +439,46 @@ export default function StudentDashboard({
                 borderRadius: '12px',
                 padding: '1.5rem',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                   <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#f8fafc', margin: 0 }}>
                     Subject Marks & Indicators (Obtained / Out Of)
                   </h3>
-                  <span style={{ fontSize: '0.6875rem', color: '#60a5fa', background: 'rgba(37, 99, 235, 0.15)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: 600 }}>
-                    Dynamic % Auto-Sync
-                  </span>
+                  <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                    <button
+                      type="button"
+                      onClick={handleFillSampleData}
+                      style={{
+                        background: 'rgba(56, 189, 248, 0.1)',
+                        border: '1px solid rgba(56, 189, 248, 0.3)',
+                        color: '#38bdf8',
+                        padding: '0.2rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.6875rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                      title="Quickly fill sample marks to test"
+                    >
+                      Fill Example Marks
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleClearForm}
+                      style={{
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        color: '#fca5a5',
+                        padding: '0.2rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.6875rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                      }}
+                      title="Clear all fields"
+                    >
+                      Clear
+                    </button>
+                  </div>
                 </div>
 
                 {error && (
@@ -932,17 +1035,56 @@ export default function StudentDashboard({
                   </>
                 ) : (
                   <div style={{
-                    padding: '3rem 2rem',
+                    padding: '3.5rem 2rem',
                     textAlign: 'center',
                     background: '#111d31',
                     border: '1px solid #263750',
                     borderRadius: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '0.75rem',
                   }}>
-                    <GraduationCap size={36} style={{ color: '#64748b', margin: '0 auto 0.75rem' }} />
-                    <h4 style={{ color: '#f8fafc', margin: '0 0 0.5rem', fontSize: '1rem' }}>Ready to Calculate</h4>
-                    <p style={{ color: '#8899b5', fontSize: '0.8125rem', margin: 0 }}>
-                      Enter your marks on the left and click "Calculate Score" to view your summary report.
+                    <div style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: '50%',
+                      background: 'rgba(56, 189, 248, 0.1)',
+                      border: '1px solid rgba(56, 189, 248, 0.25)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#38bdf8',
+                      marginBottom: '0.25rem'
+                    }}>
+                      <GraduationCap size={28} />
+                    </div>
+                    <h4 style={{ color: '#f8fafc', margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>
+                      Ready to Calculate Your Performance
+                    </h4>
+                    <p style={{ color: '#94a3b8', fontSize: '0.8125rem', margin: 0, maxWidth: '380px', lineHeight: 1.5 }}>
+                      Enter your marks on the left and click <strong>"Calculate Score"</strong> to generate your personalized diagnostic report.
                     </p>
+                    <button
+                      type="button"
+                      onClick={handleFillSampleData}
+                      style={{
+                        marginTop: '0.5rem',
+                        background: 'rgba(37, 99, 235, 0.15)',
+                        border: '1px solid rgba(59, 130, 246, 0.3)',
+                        color: '#60a5fa',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '8px',
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                      }}
+                    >
+                      <Sparkles size={14} /> Fill Example Marks & Preview
+                    </button>
                   </div>
                 )}
               </div>
@@ -958,7 +1100,7 @@ export default function StudentDashboard({
             borderRadius: '12px',
             padding: '1.5rem',
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
               <div>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', margin: 0 }}>
                   Your Report History
@@ -967,30 +1109,52 @@ export default function StudentDashboard({
                   Review your past academic evaluations and track your score progression over time
                 </p>
               </div>
-              <button
-                onClick={() => setSidebarTab('summary')}
-                style={{
-                  background: 'linear-gradient(135deg, #2563eb, #3b82f6)',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '0.45rem 0.875rem',
-                  borderRadius: '6px',
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                }}
-              >
-                <ArrowLeft size={14} /> New Evaluation
-              </button>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                {history.length > 0 && (
+                  <button
+                    onClick={handleClearAllHistory}
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.12)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      color: '#fca5a5',
+                      padding: '0.45rem 0.85rem',
+                      borderRadius: '6px',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                    }}
+                  >
+                    <Trash2 size={13} /> Clear All History
+                  </button>
+                )}
+                <button
+                  onClick={() => setSidebarTab('summary')}
+                  style={{
+                    background: 'linear-gradient(135deg, #2563eb, #3b82f6)',
+                    color: '#fff',
+                    border: 'none',
+                    padding: '0.45rem 0.875rem',
+                    borderRadius: '6px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem',
+                  }}
+                >
+                  <ArrowLeft size={14} /> New Evaluation
+                </button>
+              </div>
             </div>
 
             {history.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem 1rem', color: '#64748b' }}>
                 <Clock size={36} style={{ margin: '0 auto 0.75rem' }} />
-                <p style={{ margin: 0, fontSize: '0.875rem' }}>No past reports found. Run your first evaluation!</p>
+                <p style={{ margin: 0, fontSize: '0.875rem' }}>No past reports found. Enter your marks and calculate your first report!</p>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -1035,24 +1199,43 @@ export default function StudentDashboard({
                       </span>
                     </div>
 
-                    <button
-                      onClick={() => handleViewHistoryReport(h.id)}
-                      style={{
-                        background: 'rgba(37, 99, 235, 0.15)',
-                        border: '1px solid rgba(59, 130, 246, 0.3)',
-                        color: '#60a5fa',
-                        padding: '0.45rem 0.85rem',
-                        borderRadius: '6px',
-                        fontSize: '0.75rem',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.35rem',
-                      }}
-                    >
-                      <FileText size={14} /> View Full Report
-                    </button>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                      <button
+                        onClick={() => handleViewHistoryReport(h.id)}
+                        style={{
+                          background: 'rgba(37, 99, 235, 0.15)',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
+                          color: '#60a5fa',
+                          padding: '0.45rem 0.85rem',
+                          borderRadius: '6px',
+                          fontSize: '0.75rem',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.35rem',
+                        }}
+                      >
+                        <FileText size={14} /> View Report
+                      </button>
+                      <button
+                        onClick={(e) => handleDeleteReport(e, h.id)}
+                        title="Delete this report"
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.12)',
+                          border: '1px solid rgba(239, 68, 68, 0.25)',
+                          color: '#fca5a5',
+                          padding: '0.45rem 0.65rem',
+                          borderRadius: '6px',
+                          fontSize: '0.75rem',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

@@ -72,6 +72,14 @@ export const api = {
     }),
   getStudentHistory: () => fetchJson('/api/student/history'),
   getReportById: (reportId) => fetchJson(`/api/student/report/${reportId}`),
+  deleteStudentReport: (reportId) =>
+    fetchJson(`/api/student/report/${reportId}`, {
+      method: 'DELETE',
+    }),
+  clearStudentHistory: () =>
+    fetchJson('/api/student/history', {
+      method: 'DELETE',
+    }),
 
   // ML Platform APIs
   predictStudent: (studentData) =>

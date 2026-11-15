@@ -288,4 +288,32 @@ class StudentPortalService:
             print(f"Error reading student report history: {e}")
         return history
 
+    def delete_student_report(self, user_id: int, report_id: int) -> bool:
+        """Delete a single report belonging to the user."""
+        try:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute("DELETE FROM student_reports WHERE id = ? AND user_id = ?", (report_id, user_id))
+            deleted = cur.rowcount > 0
+            conn.commit()
+            conn.close()
+            return deleted
+        except Exception as e:
+            print(f"Error deleting student report: {e}")
+            return False
+
+    def clear_student_history(self, user_id: int) -> int:
+        """Clear all historical reports for a student."""
+        try:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute("DELETE FROM student_reports WHERE user_id = ?", (user_id,))
+            deleted_count = cur.rowcount
+            conn.commit()
+            conn.close()
+            return deleted_count
+        except Exception as e:
+            print(f"Error clearing student history: {e}")
+            return 0
+
 student_portal_service = StudentPortalService()
