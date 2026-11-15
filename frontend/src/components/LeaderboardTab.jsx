@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trophy, Award, Layers, Cpu, CheckCircle } from 'lucide-react';
+import { Trophy, Award, CheckCircle } from 'lucide-react';
 import { api } from '../services/api';
 
 export default function LeaderboardTab() {
@@ -139,37 +139,6 @@ export default function LeaderboardTab() {
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-
-      {/* Ensemble Fusion & Tuning Insights */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
-        <div className="card">
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-            <Layers size={18} color="#818cf8" />
-            Model Fusion Strategy
-          </h4>
-          <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            <strong>Voting Fusion:</strong> Combines predictions across Random Forest, Extra Trees, and HistGradientBoosting to smooth out individual learner variance.
-          </p>
-          <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
-            <strong>Stacking Fusion:</strong> Trains an out-of-fold meta-model (Ridge for regression, Logistic Regression for classification) that learns the optimal blending weights of base model probabilities.
-          </p>
-        </div>
-
-        <div className="card">
-          <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
-            <Cpu size={18} color="#38bdf8" />
-            Hyperparameter Optimization
-          </h4>
-          <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-            RandomizedSearchCV explored tree depth, feature sampling ratios, leaf nodes, and estimator counts across 3-fold cross validation.
-          </p>
-          {data.training_summary && data.training_summary.tuning_best_params && (
-            <div style={{ background: 'var(--bg-input)', padding: '0.65rem 0.85rem', borderRadius: '0.5rem', border: '1px solid var(--border-card)', fontSize: '0.75rem', fontFamily: 'JetBrains Mono, monospace', color: '#93c5fd' }}>
-              {JSON.stringify(data.training_summary.tuning_best_params, null, 2)}
-            </div>
-          )}
         </div>
       </div>
     </div>

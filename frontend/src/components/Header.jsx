@@ -3,7 +3,6 @@ import {
   GraduationCap, 
   Sliders, 
   Trophy, 
-  Globe2, 
   BarChart3, 
   Users, 
   LogIn,
@@ -21,7 +20,6 @@ export default function Header({
     { id: 'predict', label: 'Score Predictor', icon: GraduationCap },
     { id: 'simulate', label: 'Score Simulator', icon: Sliders },
     { id: 'leaderboard', label: 'Model Rankings', icon: Trophy },
-    { id: 'domain', label: 'Domain Testing', icon: Globe2 },
     { id: 'analytics', label: 'Dataset & Stats', icon: BarChart3 },
     { id: 'batch', label: 'Batch Predictor', icon: Users },
   ];

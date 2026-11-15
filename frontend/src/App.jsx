@@ -4,7 +4,6 @@ import StudentDashboard from './components/StudentDashboard';
 import PredictorTab from './components/PredictorTab';
 import SimulatorTab from './components/SimulatorTab';
 import LeaderboardTab from './components/LeaderboardTab';
-import DomainGenTab from './components/DomainGenTab';
 import AnalyticsTab from './components/AnalyticsTab';
 import BatchPredictTab from './components/BatchPredictTab';
 import AuthModal from './components/AuthModal';
@@ -80,7 +79,6 @@ export default function App() {
         {!currentUser && activeTab === 'predict' && <PredictorTab presets={presets} />}
         {!currentUser && activeTab === 'simulate' && <SimulatorTab />}
         {!currentUser && activeTab === 'leaderboard' && <LeaderboardTab />}
-        {!currentUser && activeTab === 'domain' && <DomainGenTab />}
         {!currentUser && activeTab === 'analytics' && <AnalyticsTab />}
         {!currentUser && activeTab === 'batch' && <BatchPredictTab />}
       </main>
