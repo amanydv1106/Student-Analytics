@@ -1,4 +1,6 @@
-const BASE_URL = import.meta.env.VITE_API_URL || '';
+const PROD_API_URL = 'https://student-analytics-backend-0cfn.onrender.com';
+const RAW_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? PROD_API_URL : '');
+const BASE_URL = RAW_URL.replace(/\/$/, '');
 
 const TOKEN_KEY = 'student_portal_token';
 const USER_KEY = 'student_portal_user';
