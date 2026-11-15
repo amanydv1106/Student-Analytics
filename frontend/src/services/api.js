@@ -71,6 +71,7 @@ export const api = {
       body: JSON.stringify(reportInput),
     }),
   getStudentHistory: () => fetchJson('/api/student/history'),
+  getReportById: (reportId) => fetchJson(`/api/student/report/${reportId}`),
 
   // ML Platform APIs
   predictStudent: (studentData) =>

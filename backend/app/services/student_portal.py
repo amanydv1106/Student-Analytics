@@ -216,6 +216,48 @@ class StudentPortalService:
             created_at=now_iso
         )
 
+    def get_student_report_by_id(self, user_id: int, report_id: int, user: Dict[str, Any]) -> Optional[StudentPerformanceReport]:
+        """Fetch a specific past report with full diagnostic details."""
+        try:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute("""
+            SELECT id, predicted_score, score_grade, risk_status, at_risk_prob, hybrid_risk_index, summary_report, created_at
+            FROM student_reports
+            WHERE id = ? AND user_id = ?
+            """, (report_id, user_id))
+            r = cur.fetchone()
+            conn.close()
+            if not r:
+                return None
+
+            summary_data = json.loads(r["summary_report"]) if r["summary_report"] else {}
+            status = str(r["risk_status"])
+            color = "#10b981" if status == "SAFE" else ("#f59e0b" if status == "MODERATE WARNING" else "#ef4444")
+            components = [ComponentMetric(**c) for c in summary_data.get("component_breakdown", [])]
+
+            return StudentPerformanceReport(
+                report_id=r["id"],
+                student_name=user.get("full_name", "Student"),
+                student_id=user.get("student_id", ""),
+                program=user.get("program", "Computer Science"),
+                semester=user.get("semester", 4),
+                predicted_score=float(r["predicted_score"]),
+                score_grade=str(r["score_grade"]),
+                at_risk_probability=float(r["at_risk_prob"]),
+                hybrid_risk_index=float(r["hybrid_risk_index"]),
+                risk_status=status,
+                risk_color=color,
+                executive_summary=summary_data.get("executive_summary", ""),
+                best_strengths=summary_data.get("best_strengths", []),
+                preparation_priorities=summary_data.get("preparation_priorities", []),
+                component_breakdown=components,
+                created_at=str(r["created_at"])
+            )
+        except Exception as e:
+            print(f"Error fetching report by id: {e}")
+            return None
+
     def get_student_history(self, user_id: int) -> List[ReportHistoryItem]:
         """Fetch past reports for a student ordered by newest first."""
         history: List[ReportHistoryItem] = []
