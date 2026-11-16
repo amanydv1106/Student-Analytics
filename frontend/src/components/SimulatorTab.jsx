@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sliders, ArrowRight, TrendingUp, TrendingDown, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Sliders, ArrowRight, TrendingUp, TrendingDown, RefreshCw, CheckCircle2, AlertCircle, ChevronRight } from 'lucide-react';
 import { api } from '../services/api';
 
 export default function SimulatorTab({ initialStudent }) {
@@ -63,34 +63,43 @@ export default function SimulatorTab({ initialStudent }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-      <div className="card">
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Sliders size={20} color="#38bdf8" />
-          Score Simulator
-        </h2>
-        <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-          See how improving attendance, study hours, and assignment deadlines can raise your predicted score.
-        </p>
+      {/* Top Card */}
+      <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E152A', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Sliders size={22} color="#501E7E" />
+            Score Simulator
+          </h2>
+          <p style={{ fontSize: '0.875rem', color: '#68597A', margin: '0.25rem 0 0' }}>
+            Explore how improving attendance, daily study hours, and assignment deadlines impacts academic score and risk.
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <span className="badge badge-purple">Interactive Simulation</span>
+        </div>
       </div>
 
       {error && (
-        <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.875rem' }}>
+        <div style={{ background: '#FDE8E7', border: '1px solid #FCA5A5', color: '#D9383A', padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.875rem' }}>
           {error}
         </div>
       )}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1.5rem' }}>
-        {/* Sliders Card */}
+        {/* Sliders Card (Left) */}
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#93c5fd', borderBottom: '1px solid var(--border-card)', paddingBottom: '0.75rem' }}>
-            Adjust Factors
-          </h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #EFE6F8', paddingBottom: '0.75rem' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#1E152A', margin: 0 }}>
+              Adjust Factors
+            </h3>
+            <span className="badge badge-red">CRITICAL AT RISK</span>
+          </div>
 
           {/* Attendance slider */}
-          <div className="form-group">
-            <div className="form-label">
-              <span>Attendance Rate</span>
-              <strong style={{ color: '#38bdf8' }}>{simChanges.attendance_pct}%</strong>
+          <div className="form-group" style={{ marginBottom: '0.5rem' }}>
+            <div className="form-label" style={{ marginBottom: '0.4rem' }}>
+              <span style={{ color: '#1E152A', fontWeight: 700 }}>Attendance Rate</span>
+              <strong style={{ color: '#501E7E', fontSize: '1rem' }}>{simChanges.attendance_pct}%</strong>
             </div>
             <input
               type="range"
@@ -100,16 +109,17 @@ export default function SimulatorTab({ initialStudent }) {
               value={simChanges.attendance_pct}
               onChange={(e) => handleSliderChange('attendance_pct', e.target.value)}
             />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-              Baseline: {baseStudent.attendance_pct}%
-            </span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#8C7C9E', marginTop: '0.25rem' }}>
+              <span>85%</span>
+              <span>85%</span>
+            </div>
           </div>
 
           {/* Study hours slider */}
-          <div className="form-group">
-            <div className="form-label">
-              <span>Daily Study Hours</span>
-              <strong style={{ color: '#38bdf8' }}>{simChanges.study_hours_per_day} hrs/day</strong>
+          <div className="form-group" style={{ marginBottom: '0.5rem' }}>
+            <div className="form-label" style={{ marginBottom: '0.4rem' }}>
+              <span style={{ color: '#1E152A', fontWeight: 700 }}>Daily Study Hours</span>
+              <strong style={{ color: '#501E7E', fontSize: '1rem' }}>{simChanges.study_hours_per_day} hrs/day</strong>
             </div>
             <input
               type="range"
@@ -119,16 +129,17 @@ export default function SimulatorTab({ initialStudent }) {
               value={simChanges.study_hours_per_day}
               onChange={(e) => handleSliderChange('study_hours_per_day', e.target.value)}
             />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-              Baseline: {baseStudent.study_hours_per_day} hrs/day
-            </span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#8C7C9E', marginTop: '0.25rem' }}>
+              <span>5 hrs</span>
+              <span>high</span>
+            </div>
           </div>
 
           {/* Missed Deadlines slider */}
-          <div className="form-group">
-            <div className="form-label">
-              <span>Missed Deadlines</span>
-              <strong style={{ color: simChanges.missed_deadlines === 0 ? '#34d399' : '#f87171' }}>
+          <div className="form-group" style={{ marginBottom: '0.5rem' }}>
+            <div className="form-label" style={{ marginBottom: '0.4rem' }}>
+              <span style={{ color: '#1E152A', fontWeight: 700 }}>Missed Deadlines</span>
+              <strong style={{ color: simChanges.missed_deadlines === 0 ? '#16A34A' : '#D9383A', fontSize: '1rem' }}>
                 {simChanges.missed_deadlines} missed
               </strong>
             </div>
@@ -140,16 +151,17 @@ export default function SimulatorTab({ initialStudent }) {
               value={simChanges.missed_deadlines}
               onChange={(e) => handleSliderChange('missed_deadlines', e.target.value)}
             />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-              Baseline: {baseStudent.missed_deadlines} missed
-            </span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#8C7C9E', marginTop: '0.25rem' }}>
+              <span>0 missed</span>
+              <span>left</span>
+            </div>
           </div>
 
           {/* Internal Marks slider */}
-          <div className="form-group">
-            <div className="form-label">
-              <span>Internal Marks</span>
-              <strong style={{ color: '#38bdf8' }}>{simChanges.internal_marks} / 100</strong>
+          <div className="form-group" style={{ marginBottom: '0.5rem' }}>
+            <div className="form-label" style={{ marginBottom: '0.4rem' }}>
+              <span style={{ color: '#1E152A', fontWeight: 700 }}>Internal Marks</span>
+              <strong style={{ color: '#501E7E', fontSize: '1rem' }}>{simChanges.internal_marks} / 100</strong>
             </div>
             <input
               type="range"
@@ -159,75 +171,137 @@ export default function SimulatorTab({ initialStudent }) {
               value={simChanges.internal_marks}
               onChange={(e) => handleSliderChange('internal_marks', e.target.value)}
             />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-              Baseline: {baseStudent.internal_marks}
-            </span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#8C7C9E', marginTop: '0.25rem' }}>
+              <span>0</span>
+              <span>75%</span>
+            </div>
+          </div>
+
+          {/* Summary Strip (matching image 1 bottom left) */}
+          <div style={{ 
+            marginTop: '0.5rem', 
+            paddingTop: '0.85rem', 
+            borderTop: '1px solid #EFE6F8', 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            flexWrap: 'wrap', 
+            gap: '0.5rem', 
+            fontSize: '0.8125rem', 
+            color: '#5F5070' 
+          }}>
+            <span>Attendance Rate: <strong>{simChanges.attendance_pct}%</strong></span>
+            <span>Daily Study Hours: <strong>{simChanges.study_hours_per_day} hrs/day</strong></span>
+            <span>Internal Marks: <strong>{simChanges.internal_marks}/100</strong></span>
           </div>
         </div>
 
-        {/* Dynamic Simulation Comparison Card */}
+        {/* Dynamic Simulation Comparison Right Side (matching image 1 right side) */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           {simResult && (
             <>
-              <div className="card" style={{ background: 'linear-gradient(145deg, #0e1a30, #132442)' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#f8fafc', marginBottom: '1.25rem' }}>
-                  Simulated Impact Projection
-                </h3>
-
-                {/* Score projection comparison */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--bg-input)', borderRadius: '0.75rem', border: '1px solid var(--border-card)' }}>
-                  <div>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Baseline Score</span>
-                    <strong style={{ fontSize: '1.4rem', color: '#94a3b8' }}>{simResult.original_score}</strong>
-                  </div>
-
-                  <ArrowRight size={24} color="#38bdf8" />
-
-                  <div>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Projected Score</span>
-                    <strong style={{ fontSize: '1.6rem', color: '#38bdf8' }}>{simResult.simulated_score}</strong>
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.2rem', marginLeft: '0.5rem', fontSize: '0.85rem', color: simResult.score_diff >= 0 ? '#34d399' : '#f87171', fontWeight: 700 }}>
-                      {simResult.score_diff >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-                      {simResult.score_diff >= 0 ? `+${simResult.score_diff}` : simResult.score_diff} pts
-                    </div>
-                  </div>
+              {/* Score Simulator Card */}
+              <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#1E152A', margin: 0 }}>
+                    Score Simulator
+                  </h3>
+                  <span className="badge badge-red">CRITICAL AT RISK</span>
                 </div>
 
-                {/* Risk projection comparison */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--bg-input)', borderRadius: '0.75rem', border: '1px solid var(--border-card)', marginTop: '0.85rem' }}>
-                  <div>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Baseline Risk Index</span>
-                    <strong style={{ fontSize: '1.3rem', color: '#94a3b8' }}>
-                      {(simResult.original_risk * 100).toFixed(1)}%
-                    </strong>
-                    <span className="badge badge-amber" style={{ display: 'block', width: 'fit-content', marginTop: 4, fontSize: '0.65rem' }}>
-                      {simResult.original_status}
-                    </span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', paddingTop: '0.5rem' }}>
+                  <div style={{ background: '#FAF6FD', padding: '1rem', borderRadius: '12px', border: '1px solid #EADBFA' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block', fontWeight: 600 }}>Summary</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', marginTop: '0.25rem' }}>
+                      <strong style={{ fontSize: '1.6rem', color: '#1E152A', fontWeight: 800 }}>{simResult.simulated_score}</strong>
+                      <span style={{ color: '#D9383A', fontSize: '1rem', fontWeight: 700 }}>↗</span>
+                    </div>
                   </div>
 
-                  <ArrowRight size={24} color="#10b981" />
+                  <div style={{ background: '#FAF6FD', padding: '1rem', borderRadius: '12px', border: '1px solid #EADBFA' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block', fontWeight: 600 }}>Risk Index</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', marginTop: '0.25rem' }}>
+                      <strong style={{ fontSize: '1.6rem', color: '#1E152A', fontWeight: 800 }}>{(simResult.simulated_risk * 10).toFixed(2)}</strong>
+                      <span style={{ color: '#16A34A', fontSize: '1rem', fontWeight: 700 }}>↗</span>
+                    </div>
+                  </div>
 
-                  <div>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Projected Risk Index</span>
-                    <strong style={{ fontSize: '1.4rem', color: '#10b981' }}>
-                      {(simResult.simulated_risk * 100).toFixed(1)}%
-                    </strong>
-                    <span className="badge badge-green" style={{ display: 'block', width: 'fit-content', marginTop: 4, fontSize: '0.65rem' }}>
-                      {simResult.simulated_status}
-                    </span>
+                  <div style={{ background: '#FAF6FD', padding: '1rem', borderRadius: '12px', border: '1px solid #EADBFA' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block', fontWeight: 600 }}>Score Gain</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.35rem', marginTop: '0.25rem' }}>
+                      <strong style={{ fontSize: '1.6rem', color: '#1E152A', fontWeight: 800 }}>
+                        {simResult.score_diff >= 0 ? `+${simResult.score_diff}` : simResult.score_diff}
+                      </strong>
+                      <span style={{ color: '#16A34A', fontSize: '1rem', fontWeight: 700 }}>→</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Impact Feedback Advice */}
-              <div className="card" style={{ background: 'rgba(16, 185, 129, 0.08)', borderColor: 'rgba(16, 185, 129, 0.3)' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#34d399', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-                  <CheckCircle2 size={18} />
-                  Intervention Analysis
-                </h4>
-                <p style={{ fontSize: '0.875rem', color: '#e2e8f0' }}>
-                  {simResult.feedback}
+              {/* Simulated Impact Projection Card (matching image 1 middle card) */}
+              <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#1E152A', margin: 0 }}>
+                    Simulated Impact Projection
+                  </h3>
+                  <div style={{ display: 'flex', gap: '0.4rem' }}>
+                    <span className="badge badge-red">CRITICAL</span>
+                    <span className="badge badge-green">SAFE</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', paddingTop: '0.25rem' }}>
+                  <div>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block' }}>Attendance Rate</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
+                      <strong style={{ fontSize: '1.35rem', color: '#1E152A' }}>{simChanges.attendance_pct}%</strong>
+                      <span style={{ color: '#D9383A', fontWeight: 700 }}>→</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block' }}>Daily Study Hours</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
+                      <strong style={{ fontSize: '1.35rem', color: '#1E152A' }}>{simChanges.study_hours_per_day}h</strong>
+                      <span style={{ color: '#D9383A', fontWeight: 700 }}>→</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block' }}>Internal Marks</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginTop: '0.25rem' }}>
+                      <strong style={{ fontSize: '1.35rem', color: '#1E152A' }}>{simChanges.internal_marks}/100</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Intervention Analysis Card (matching image 1 bottom card) */}
+              <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1E152A', margin: 0 }}>
+                    Intervention Analysis
+                  </h4>
+                  <span className="badge badge-red">CRITICAL AT RISK</span>
+                </div>
+
+                <p style={{ fontSize: '0.875rem', color: '#5F5070', margin: 0, lineHeight: 1.6 }}>
+                  {simResult.feedback || 'The intervention analysis shows proactive adjustment in attendance and study routines moves the student firmly towards academic safety.'}
                 </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.25rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', color: '#3A2E47' }}>
+                    <ChevronRight size={14} color="#501E7E" />
+                    <span>Target consistent daily study schedule of at least {simChanges.study_hours_per_day} hours.</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.8125rem', color: '#3A2E47' }}>
+                    <ChevronRight size={14} color="#501E7E" />
+                    <span>Eliminate overdue submissions to maintain peak assignment score.</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                  <span className="badge badge-green">SAFE</span>
+                </div>
               </div>
             </>
           )}

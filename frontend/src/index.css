@@ -1,18 +1,21 @@
 :root {
-  --bg-main: #070d18;
-  --bg-card: #0d182b;
-  --bg-card-subtle: #12213a;
-  --bg-input: #0a1322;
-  --border-card: #1c2e4c;
-  --border-focus: #3b82f6;
-  --text-main: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-dim: #64748b;
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --emerald: #10b981;
-  --amber: #f59e0b;
-  --rose: #ef4444;
+  --bg-main: #EDE4F7;
+  --bg-card: #FFFFFF;
+  --bg-card-subtle: #FAF6FD;
+  --bg-input: #FFFFFF;
+  --border-card: #E2D4F0;
+  --border-focus: #501E7E;
+  --text-main: #1E152A;
+  --text-muted: #5F5070;
+  --text-dim: #8C7C9E;
+  --primary: #3B185F;
+  --primary-hover: #4E1F7C;
+  --primary-light: #F1E8F9;
+  --emerald: #16A34A;
+  --amber: #D97706;
+  --rose: #D9383A;
+  --slider-track: #D7C7E8;
+  --slider-thumb: #6A4984;
 }
 
 * {
@@ -25,9 +28,9 @@ body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-main);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(30, 58, 138, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(214, 194, 238, 0.5) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(235, 215, 252, 0.45) 0px, transparent 55%),
+    radial-gradient(at 50% 100%, rgba(198, 170, 232, 0.35) 0px, transparent 60%);
   background-attachment: fixed;
   color: var(--text-main);
   min-height: 100vh;
@@ -41,14 +44,14 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #081220;
+  background: #EDE4F7;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e3a5f;
+  background: #C9B6DF;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2b4c78;
+  background: #B39CCA;
 }
 
 /* Common Layout Components */
@@ -61,14 +64,15 @@ body {
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
-  border-radius: 1rem;
+  border-radius: 1.125rem;
   padding: 1.5rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 25px -5px rgba(78, 36, 115, 0.07), 0 4px 10px -4px rgba(78, 36, 115, 0.04);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  border-color: rgba(59, 130, 246, 0.35);
+  border-color: rgba(107, 42, 153, 0.35);
+  box-shadow: 0 12px 28px -5px rgba(78, 36, 115, 0.1), 0 6px 12px -4px rgba(78, 36, 115, 0.05);
 }
 
 .badge {
@@ -77,34 +81,40 @@ body {
   gap: 0.35rem;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .badge-green {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: #E6F8EE;
+  color: #16A34A;
+  border: 1px solid rgba(22, 163, 74, 0.25);
 }
 
 .badge-amber {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: #FEF3C7;
+  color: #D97706;
+  border: 1px solid rgba(217, 119, 6, 0.25);
 }
 
 .badge-red {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #FDE8E7;
+  color: #D9383A;
+  border: 1px solid rgba(217, 56, 58, 0.25);
 }
 
 .badge-blue {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+.badge-purple {
+  background: #F1E8F9;
+  color: #501E7E;
+  border: 1px solid #DDCDEE;
 }
 
 /* Buttons */
@@ -124,26 +134,26 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(135deg, #3B185F, #501E7E);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(59, 24, 95, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #481B6D, #5E2594);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 6px 18px rgba(59, 24, 95, 0.4);
 }
 
 .btn-secondary {
-  background: var(--bg-card-subtle);
-  color: var(--text-main);
-  border: 1px solid var(--border-card);
+  background: #F3ECF9;
+  color: #3B185F;
+  border: 1px solid #D8C7EB;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #1a2f52;
-  border-color: #2e4d7a;
+  background: #EADBFA;
+  border-color: #CBB4E5;
 }
 
 .btn:disabled {
@@ -175,19 +185,52 @@ body {
   color: var(--text-main);
   font-size: 0.875rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   font-family: inherit;
 }
 
 .form-input:focus, .form-select:focus {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px rgba(80, 30, 126, 0.15);
 }
 
-/* Range input */
+/* Range input styled to match image 1 */
 input[type="range"] {
-  accent-color: var(--primary);
+  -webkit-appearance: none;
+  appearance: none;
   width: 100%;
+  height: 8px;
+  background: var(--slider-track);
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--slider-thumb);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(106, 73, 132, 0.4);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #501E7E;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--slider-thumb);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(106, 73, 132, 0.4);
   cursor: pointer;
 }
 
@@ -209,12 +252,12 @@ input[type="range"] {
 
 .data-table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(28, 46, 76, 0.5);
+  border-bottom: 1px solid #F0E6F8;
   color: var(--text-main);
 }
 
 .data-table tr:hover td {
-  background: rgba(28, 46, 76, 0.3);
+  background: rgba(237, 228, 247, 0.5);
 }
 
 /* Metric ring and gauge */
@@ -239,7 +282,7 @@ input[type="range"] {
 }
 
 .metric-ring .bg-circle {
-  stroke: rgba(30, 58, 95, 0.5);
+  stroke: rgba(201, 182, 223, 0.4);
 }
 
 .metric-ring .progress-circle {

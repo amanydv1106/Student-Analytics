@@ -57,7 +57,7 @@ export default function App() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#070f1e', color: '#f8fafc' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#EDE4F7', color: '#1E152A' }}>
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -93,17 +93,17 @@ export default function App() {
 
       {!currentUser && (
         <footer style={{ 
-          borderTop: '1px solid #1a273c', 
-          background: '#091220', 
+          borderTop: '1px solid #E2D4F0', 
+          background: '#FFFFFF', 
           padding: '1.25rem 0', 
           marginTop: 'auto', 
           textAlign: 'center', 
           fontSize: '0.75rem', 
-          color: '#64748b' 
+          color: '#6B5C7D' 
         }}>
-          <div className="container">
+          <div className="container" style={{ padding: '0 1.5rem' }}>
             <p style={{ margin: 0 }}>
-              <strong>Student Success AI</strong>
+              <strong style={{ color: '#1E152A' }}>StudIQ</strong> • Student Performance Analytics
             </p>
           </div>
         </footer>

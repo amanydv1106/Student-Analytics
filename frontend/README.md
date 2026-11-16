@@ -1,4 +1,4 @@
-# Student Success AI - Frontend
+# StudIQ - Student Performance Analytics Frontend
 
 Modern React + Vite web dashboard for the Student Success Prediction & Early-Warning AI system.
 

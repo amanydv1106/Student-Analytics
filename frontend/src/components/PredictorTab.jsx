@@ -84,37 +84,70 @@ export default function PredictorTab({ presets, initialStudent }) {
       {/* Top Banner & Presets */}
       <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Sparkles size={20} color="#38bdf8" />
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E152A', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <Sparkles size={22} color="#501E7E" />
             Score Predictor
           </h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-            Enter student details below or select a sample student.
+          <p style={{ fontSize: '0.875rem', color: '#68597A', margin: '0.25rem 0 0' }}>
+            Enter student academic & behavioral indicators below or select a sample profile.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <button
             type="button"
-            className="btn btn-secondary"
             onClick={() => loadPreset('high_performer')}
-            style={{ fontSize: '0.8rem', padding: '0.45rem 0.85rem' }}
+            style={{ 
+              fontSize: '0.8125rem', 
+              padding: '0.45rem 0.85rem',
+              background: '#FEF3C7',
+              color: '#92400E',
+              border: '1px solid #FDE68A',
+              borderRadius: '8px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem'
+            }}
           >
             🌟 Top Achiever
           </button>
           <button
             type="button"
-            className="btn btn-secondary"
             onClick={() => loadPreset('average_student')}
-            style={{ fontSize: '0.8rem', padding: '0.45rem 0.85rem' }}
+            style={{ 
+              fontSize: '0.8125rem', 
+              padding: '0.45rem 0.85rem',
+              background: '#F1E8F9',
+              color: '#501E7E',
+              border: '1px solid #DDCDEE',
+              borderRadius: '8px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem'
+            }}
           >
             ⚖️ Average Student
           </button>
           <button
             type="button"
-            className="btn btn-secondary"
             onClick={() => loadPreset('at_risk_student')}
-            style={{ fontSize: '0.8rem', padding: '0.45rem 0.85rem', borderColor: 'rgba(239, 68, 68, 0.4)' }}
+            style={{ 
+              fontSize: '0.8125rem', 
+              padding: '0.45rem 0.85rem',
+              background: '#FDE8E7',
+              color: '#D9383A',
+              border: '1px solid #FECDD3',
+              borderRadius: '8px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem'
+            }}
           >
             ⚠️ Critical At-Risk
           </button>
@@ -122,7 +155,7 @@ export default function PredictorTab({ presets, initialStudent }) {
       </div>
 
       {error && (
-        <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.875rem' }}>
+        <div style={{ background: '#FDE8E7', border: '1px solid #FCA5A5', color: '#D9383A', padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.875rem' }}>
           {error}
         </div>
       )}
@@ -131,8 +164,8 @@ export default function PredictorTab({ presets, initialStudent }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '1.5rem' }}>
         {/* Form Card */}
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, borderBottom: '1px solid var(--border-card)', paddingBottom: '0.75rem', color: '#93c5fd', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <BookOpen size={18} />
+          <h3 style={{ fontSize: '1rem', fontWeight: 800, borderBottom: '1px solid #EFE6F8', paddingBottom: '0.75rem', color: '#1E152A', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <BookOpen size={18} color="#501E7E" />
             Academic & Behavioral Profile
           </h3>
 
@@ -325,7 +358,7 @@ export default function PredictorTab({ presets, initialStudent }) {
             className="btn btn-primary"
             onClick={() => handlePredict()}
             disabled={loading}
-            style={{ marginTop: '0.5rem', width: '100%' }}
+            style={{ marginTop: '0.5rem', width: '100%', padding: '0.8rem' }}
           >
             {loading ? <RefreshCw className="animate-spin" size={18} /> : <Send size={18} />}
             {loading ? 'Calculating...' : 'Calculate Score'}
@@ -337,17 +370,17 @@ export default function PredictorTab({ presets, initialStudent }) {
           {result ? (
             <>
               {/* Primary Score Ring & Status Card */}
-              <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem', background: 'linear-gradient(145deg, #0e1a30, #132442)' }}>
+              <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '0.8rem', color: '#68597A', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
                     Predicted Score
                   </span>
                   <span
                     className="badge"
                     style={{
-                      background: `${result.risk_color}22`,
-                      color: result.risk_color,
-                      border: `1px solid ${result.risk_color}55`,
+                      background: result.risk_status === 'SAFE' ? '#E6F8EE' : (result.risk_status === 'MODERATE' ? '#FEF3C7' : '#FDE8E7'),
+                      color: result.risk_status === 'SAFE' ? '#16A34A' : (result.risk_status === 'MODERATE' ? '#D97706' : '#D9383A'),
+                      border: `1px solid ${result.risk_status === 'SAFE' ? 'rgba(22, 163, 74, 0.25)' : (result.risk_status === 'MODERATE' ? 'rgba(217, 119, 6, 0.25)' : 'rgba(217, 56, 58, 0.25)')}`,
                     }}
                   >
                     {result.risk_status}
@@ -363,78 +396,78 @@ export default function PredictorTab({ presets, initialStudent }) {
                       cx="65"
                       cy="65"
                       r="52"
-                      stroke={result.risk_color}
+                      stroke={result.risk_status === 'SAFE' ? '#16A34A' : (result.risk_status === 'MODERATE' ? '#D97706' : '#D9383A')}
                       strokeDasharray={circumference}
                       strokeDashoffset={strokeDashoffset}
                     />
                   </svg>
                   <div className="ring-label">
-                    <span style={{ fontSize: '1.9rem', fontWeight: 800, color: '#f8fafc', lineHeight: 1 }}>
+                    <span style={{ fontSize: '2rem', fontWeight: 800, color: '#1E152A', lineHeight: 1 }}>
                       {result.predicted_score}
                     </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block', marginTop: '2px' }}>
                       / 100
                     </span>
                   </div>
                 </div>
 
                 <div>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#f8fafc' }}>
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#1E152A', margin: 0 }}>
                     Grade: {result.score_grade}
                   </h4>
-                  <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
-                    Calculated based on student details
+                  <p style={{ fontSize: '0.8125rem', color: '#68597A', margin: '0.25rem 0 0' }}>
+                    Calculated by StudIQ Performance Engine
                   </p>
                 </div>
 
                 {/* Sub-Metrics Cards */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', width: '100%' }}>
-                  <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: '0.75rem', border: '1px solid var(--border-card)', textAlign: 'left' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Risk Probability</span>
-                    <strong style={{ fontSize: '1.25rem', color: '#f8fafc' }}>
+                  <div style={{ background: '#FAF6FD', padding: '0.85rem', borderRadius: '0.75rem', border: '1px solid #EADBFA', textAlign: 'left' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block', fontWeight: 600 }}>Risk Probability</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#1E152A' }}>
                       {(result.at_risk_probability * 100).toFixed(1)}%
                     </strong>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', display: 'block' }}>Threshold: 50%</span>
+                    <span style={{ fontSize: '0.7rem', color: '#8C7C9E', display: 'block', marginTop: '2px' }}>Threshold: 50%</span>
                   </div>
 
-                  <div style={{ background: 'var(--bg-input)', padding: '0.85rem', borderRadius: '0.75rem', border: '1px solid var(--border-card)', textAlign: 'left' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Overall Risk</span>
-                    <strong style={{ fontSize: '1.25rem', color: result.risk_color }}>
+                  <div style={{ background: '#FAF6FD', padding: '0.85rem', borderRadius: '0.75rem', border: '1px solid #EADBFA', textAlign: 'left' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#68597A', display: 'block', fontWeight: 600 }}>Overall Risk</span>
+                    <strong style={{ fontSize: '1.25rem', color: result.risk_status === 'SAFE' ? '#16A34A' : '#D9383A' }}>
                       {(result.hybrid_risk_index * 100).toFixed(1)}%
                     </strong>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', display: 'block' }}>Combined score</span>
+                    <span style={{ fontSize: '0.7rem', color: '#8C7C9E', display: 'block', marginTop: '2px' }}>Combined index</span>
                   </div>
                 </div>
               </div>
 
               {/* Strengths & Risks Cards */}
               <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#34d399', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#16A34A', display: 'flex', alignItems: 'center', gap: '0.4rem', margin: 0 }}>
                   <CheckCircle2 size={16} />
                   Key Strengths
                 </h4>
                 {result.key_strengths.length > 0 ? (
-                  <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                  <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem', margin: 0, padding: 0 }}>
                     {result.key_strengths.map((s, i) => (
-                      <li key={i} style={{ fontSize: '0.8125rem', color: '#cbd5e1', display: 'flex', alignItems: 'flex-start', gap: '0.4rem' }}>
-                        <span style={{ color: '#34d399', fontWeight: 'bold' }}>✓</span> {s}
+                      <li key={i} style={{ fontSize: '0.8125rem', color: '#3A2E47', display: 'flex', alignItems: 'flex-start', gap: '0.4rem' }}>
+                        <span style={{ color: '#16A34A', fontWeight: 'bold' }}>✓</span> {s}
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p style={{ fontSize: '0.8125rem', color: 'var(--text-dim)' }}>No standout positive engagement metrics recorded.</p>
+                  <p style={{ fontSize: '0.8125rem', color: '#8C7C9E', margin: 0 }}>No standout positive engagement metrics recorded.</p>
                 )}
 
                 {result.risk_factors.length > 0 && (
                   <>
-                    <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#f87171', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.5rem' }}>
+                    <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#D9383A', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.5rem', margin: 0 }}>
                       <AlertTriangle size={16} />
                       Areas for Improvement
                     </h4>
-                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.4rem', margin: 0, padding: 0 }}>
                       {result.risk_factors.map((r, i) => (
-                        <li key={i} style={{ fontSize: '0.8125rem', color: '#fca5a5', display: 'flex', alignItems: 'flex-start', gap: '0.4rem' }}>
-                          <span style={{ color: '#f87171', fontWeight: 'bold' }}>!</span> {r}
+                        <li key={i} style={{ fontSize: '0.8125rem', color: '#8A2B2C', display: 'flex', alignItems: 'flex-start', gap: '0.4rem' }}>
+                          <span style={{ color: '#D9383A', fontWeight: 'bold' }}>!</span> {r}
                         </li>
                       ))}
                     </ul>
@@ -443,15 +476,15 @@ export default function PredictorTab({ presets, initialStudent }) {
               </div>
 
               {/* Actionable Recommendations */}
-              <div className="card" style={{ background: 'rgba(56, 189, 248, 0.05)', borderColor: 'rgba(56, 189, 248, 0.25)' }}>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#38bdf8', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem' }}>
-                  <Lightbulb size={16} />
+              <div className="card" style={{ background: '#FAF6FD', border: '1px solid #EADBFA' }}>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, color: '#501E7E', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.6rem', margin: 0 }}>
+                  <Lightbulb size={16} color="#501E7E" />
                   Recommendations
                 </h4>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.45rem', margin: '0.5rem 0 0', padding: 0 }}>
                   {result.recommendations.map((rec, i) => (
-                    <li key={i} style={{ fontSize: '0.8125rem', color: '#e2e8f0', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#38bdf8', marginTop: 7, flexShrink: 0 }}></span>
+                    <li key={i} style={{ fontSize: '0.8125rem', color: '#4A3E56', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#501E7E', marginTop: 7, flexShrink: 0 }}></span>
                       {rec}
                     </li>
                   ))}
@@ -459,7 +492,7 @@ export default function PredictorTab({ presets, initialStudent }) {
               </div>
             </>
           ) : (
-            <div className="card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 320, color: 'var(--text-muted)' }}>
+            <div className="card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 320, color: '#68597A' }}>
               Click 'Calculate Score' to view prediction analysis.
             </div>
           )}

@@ -11,7 +11,7 @@ DATA_DIR = BACKEND_DIR / "data"
 SCORE_MODEL_PATH = ARTIFACTS_DIR / "best_score_model.joblib"
 RISK_MODEL_PATH = ARTIFACTS_DIR / "best_risk_model.joblib"
 
-APP_TITLE = "Student Success Prediction & Early-Warning AI"
+APP_TITLE = "StudIQ - Student Performance Analytics"
 APP_VERSION = "2.0.0"
 DEBUG = False
 

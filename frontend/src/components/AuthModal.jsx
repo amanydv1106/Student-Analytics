@@ -138,7 +138,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(5, 11, 20, 0.85)',
+        backgroundColor: 'rgba(32, 14, 52, 0.65)',
         backdropFilter: 'blur(8px)',
         display: 'flex',
         alignItems: 'center',
@@ -147,42 +147,45 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         padding: '1rem',
       }}>
       <div style={{
-        background: '#111d31',
-        border: '1px solid #263750',
+        background: '#FFFFFF',
+        border: '1px solid #DDCDEE',
         borderRadius: '16px',
         width: '100%',
         maxWidth: '480px',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+        boxShadow: '0 25px 50px -12px rgba(47, 18, 77, 0.28)',
         overflow: 'hidden',
         animation: 'fadeIn 0.2s ease-out',
       }}>
         {/* Header */}
         <div style={{
           padding: '1.25rem 1.5rem',
-          borderBottom: '1px solid #1f2f47',
+          borderBottom: '1px solid #EFE6F8',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: 'linear-gradient(to right, rgba(26, 42, 69, 0.6), transparent)',
+          background: 'linear-gradient(to right, #F7F1FB, #FFFFFF)',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #2563eb, #3b82f6)',
+              background: '#1c2e4a',
               borderRadius: '10px',
-              width: '36px',
-              height: '36px',
+              width: '38px',
+              height: '38px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#fff',
+              fontSize: '1.25rem',
+              fontWeight: 800,
+              boxShadow: '0 2px 8px rgba(28, 46, 74, 0.2)',
             }}>
-              <ShieldCheck size={20} />
+              S
             </div>
             <div>
-              <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 700, color: '#f3f7ff' }}>
-                Student Portal
+              <h3 style={{ margin: 0, fontSize: '1.125rem', fontWeight: 800, color: '#1E152A' }}>
+                StudIQ Student Portal
               </h3>
-              <p style={{ margin: 0, fontSize: '0.75rem', color: '#8899b5' }}>
+              <p style={{ margin: 0, fontSize: '0.75rem', color: '#68597A' }}>
                 Sign in to view your diagnostic reports & academic advisory
               </p>
             </div>
@@ -193,7 +196,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             style={{
               background: 'none',
               border: 'none',
-              color: '#8899b5',
+              color: '#68597A',
               cursor: 'pointer',
               padding: '0.25rem',
               borderRadius: '6px',
@@ -204,23 +207,24 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         </div>
 
         {/* Tab Switcher */}
-        <div style={{ display: 'flex', borderBottom: '1px solid #1f2f47', background: '#0c1626' }}>
+        <div style={{ display: 'flex', borderBottom: '1px solid #EFE6F8', background: '#F8F3FB' }}>
           <button
             onClick={() => handleSwitchMode('login')}
             style={{
               flex: 1,
               padding: '0.875rem',
-              background: mode === 'login' ? '#111d31' : 'transparent',
+              background: mode === 'login' ? '#FFFFFF' : 'transparent',
               border: 'none',
-              borderBottom: mode === 'login' ? '2px solid #3b82f6' : '2px solid transparent',
-              color: mode === 'login' ? '#f3f7ff' : '#64748b',
-              fontWeight: 600,
+              borderBottom: mode === 'login' ? '3px solid #501E7E' : '3px solid transparent',
+              color: mode === 'login' ? '#3B185F' : '#68597A',
+              fontWeight: mode === 'login' ? 700 : 500,
               fontSize: '0.875rem',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '0.5rem',
+              transition: 'all 0.2s',
             }}
           >
             <LogIn size={16} /> Sign In
@@ -230,17 +234,18 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             style={{
               flex: 1,
               padding: '0.875rem',
-              background: mode === 'register' ? '#111d31' : 'transparent',
+              background: mode === 'register' ? '#FFFFFF' : 'transparent',
               border: 'none',
-              borderBottom: mode === 'register' ? '2px solid #3b82f6' : '2px solid transparent',
-              color: mode === 'register' ? '#f3f7ff' : '#64748b',
-              fontWeight: 600,
+              borderBottom: mode === 'register' ? '3px solid #501E7E' : '3px solid transparent',
+              color: mode === 'register' ? '#3B185F' : '#68597A',
+              fontWeight: mode === 'register' ? 700 : 500,
               fontSize: '0.875rem',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '0.5rem',
+              transition: 'all 0.2s',
             }}
           >
             <UserPlus size={16} /> Create Account
@@ -251,9 +256,9 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
         <div style={{ padding: '1.5rem' }}>
           {error && (
             <div style={{
-              background: 'rgba(239, 68, 68, 0.15)',
-              border: '1px solid rgba(239, 68, 68, 0.4)',
-              color: '#fca5a5',
+              background: '#FDE8E7',
+              border: '1px solid #FCA5A5',
+              color: '#D9383A',
               padding: '0.75rem 1rem',
               borderRadius: '8px',
               fontSize: '0.8125rem',
@@ -269,9 +274,9 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
 
           {successMsg && (
             <div style={{
-              background: 'rgba(16, 185, 129, 0.15)',
-              border: '1px solid rgba(16, 185, 129, 0.4)',
-              color: '#6ee7b7',
+              background: '#E6F8EE',
+              border: '1px solid #86EFAC',
+              color: '#16A34A',
               padding: '0.75rem 1rem',
               borderRadius: '8px',
               fontSize: '0.8125rem',
@@ -288,7 +293,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
           {mode === 'login' ? (
             <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.375rem', fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.375rem', fontWeight: 600 }}>
                   Student Email
                 </label>
                 <input
@@ -300,10 +305,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   style={{
                     width: '100%',
                     padding: '0.75rem 0.875rem',
-                    background: '#091220',
-                    border: '1px solid #233550',
+                    background: '#FAF6FD',
+                    border: '1px solid #D8C8EA',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#1E152A',
                     fontSize: '0.875rem',
                     outline: 'none',
                     boxSizing: 'border-box',
@@ -312,7 +317,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.375rem', fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.375rem', fontWeight: 600 }}>
                   Password
                 </label>
                 <input
@@ -324,10 +329,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   style={{
                     width: '100%',
                     padding: '0.75rem 0.875rem',
-                    background: '#091220',
-                    border: '1px solid #233550',
+                    background: '#FAF6FD',
+                    border: '1px solid #D8C8EA',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#1E152A',
                     fontSize: '0.875rem',
                     outline: 'none',
                     boxSizing: 'border-box',
@@ -339,12 +344,12 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 type="submit"
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #2563eb, #3b82f6)',
+                  background: 'linear-gradient(135deg, #3B185F, #501E7E)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '8px',
                   padding: '0.8125rem',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: '0.875rem',
                   cursor: loading ? 'not-allowed' : 'pointer',
                   display: 'flex',
@@ -352,7 +357,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   justifyContent: 'center',
                   gap: '0.5rem',
                   marginTop: '0.5rem',
-                  boxShadow: '0 4px 12px rgba(37, 99, 235, 0.35)',
+                  boxShadow: '0 4px 14px rgba(59, 24, 95, 0.3)',
                 }}
               >
                 {loading ? 'Signing in...' : 'Sign In to Student Portal'}
@@ -363,8 +368,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 textAlign: 'center',
                 margin: '0.75rem 0',
               }}>
-                <div style={{ borderTop: '1px solid #1f2f47', position: 'absolute', top: '50%', width: '100%' }}></div>
-                <span style={{ background: '#111d31', padding: '0 0.75rem', position: 'relative', fontSize: '0.75rem', color: '#64748b' }}>
+                <div style={{ borderTop: '1px solid #EFE6F8', position: 'absolute', top: '50%', width: '100%' }}></div>
+                <span style={{ background: '#FFFFFF', padding: '0 0.75rem', position: 'relative', fontSize: '0.75rem', color: '#68597A' }}>
                   or instant demo
                 </span>
               </div>
@@ -374,12 +379,12 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 onClick={handleDemoLogin}
                 disabled={loading}
                 style={{
-                  background: 'rgba(30, 41, 59, 0.7)',
-                  color: '#93c5fd',
-                  border: '1px solid rgba(59, 130, 246, 0.3)',
+                  background: '#F1E8F9',
+                  color: '#3B185F',
+                  border: '1px solid #D4C2EB',
                   borderRadius: '8px',
                   padding: '0.75rem',
-                  fontWeight: 500,
+                  fontWeight: 600,
                   fontSize: '0.8125rem',
                   cursor: loading ? 'not-allowed' : 'pointer',
                   display: 'flex',
@@ -394,7 +399,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
           ) : (
             <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.25rem', fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.25rem', fontWeight: 600 }}>
                   Full Name
                 </label>
                 <input
@@ -406,10 +411,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   style={{
                     width: '100%',
                     padding: '0.625rem 0.75rem',
-                    background: '#091220',
-                    border: '1px solid #233550',
+                    background: '#FAF6FD',
+                    border: '1px solid #D8C8EA',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#1E152A',
                     fontSize: '0.875rem',
                     outline: 'none',
                     boxSizing: 'border-box',
@@ -419,7 +424,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.25rem', fontWeight: 500 }}>
+                  <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.25rem', fontWeight: 600 }}>
                     Roll / Student ID
                   </label>
                   <input
@@ -430,10 +435,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                     style={{
                       width: '100%',
                       padding: '0.625rem 0.75rem',
-                      background: '#091220',
-                      border: '1px solid #233550',
+                      background: '#FAF6FD',
+                      border: '1px solid #D8C8EA',
                       borderRadius: '8px',
-                      color: '#f8fafc',
+                      color: '#1E152A',
                       fontSize: '0.875rem',
                       outline: 'none',
                       boxSizing: 'border-box',
@@ -441,7 +446,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.25rem', fontWeight: 500 }}>
+                  <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.25rem', fontWeight: 600 }}>
                     Semester
                   </label>
                   <select
@@ -450,10 +455,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                     style={{
                       width: '100%',
                       padding: '0.625rem 0.75rem',
-                      background: '#091220',
-                      border: '1px solid #233550',
+                      background: '#FAF6FD',
+                      border: '1px solid #D8C8EA',
                       borderRadius: '8px',
-                      color: '#f8fafc',
+                      color: '#1E152A',
                       fontSize: '0.875rem',
                       outline: 'none',
                       boxSizing: 'border-box',
@@ -467,7 +472,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.25rem', fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.25rem', fontWeight: 600 }}>
                   Enrolled Degree Program
                 </label>
                 <select
@@ -476,10 +481,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   style={{
                     width: '100%',
                     padding: '0.625rem 0.75rem',
-                    background: '#091220',
-                    border: '1px solid #233550',
+                    background: '#FAF6FD',
+                    border: '1px solid #D8C8EA',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#1E152A',
                     fontSize: '0.875rem',
                     outline: 'none',
                     boxSizing: 'border-box',
@@ -495,7 +500,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.25rem', fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.25rem', fontWeight: 600 }}>
                   Email Address
                 </label>
                 <input
@@ -507,10 +512,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   style={{
                     width: '100%',
                     padding: '0.625rem 0.75rem',
-                    background: '#091220',
-                    border: '1px solid #233550',
+                    background: '#FAF6FD',
+                    border: '1px solid #D8C8EA',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#1E152A',
                     fontSize: '0.875rem',
                     outline: 'none',
                     boxSizing: 'border-box',
@@ -519,7 +524,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#94a3b8', marginBottom: '0.25rem', fontWeight: 500 }}>
+                <label style={{ display: 'block', fontSize: '0.8125rem', color: '#1E152A', marginBottom: '0.25rem', fontWeight: 600 }}>
                   Create Password (min 6 characters)
                 </label>
                 <input
@@ -532,10 +537,10 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   style={{
                     width: '100%',
                     padding: '0.625rem 0.75rem',
-                    background: '#091220',
-                    border: '1px solid #233550',
+                    background: '#FAF6FD',
+                    border: '1px solid #D8C8EA',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#1E152A',
                     fontSize: '0.875rem',
                     outline: 'none',
                     boxSizing: 'border-box',
@@ -547,12 +552,12 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 type="submit"
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  background: 'linear-gradient(135deg, #3B185F, #501E7E)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '8px',
                   padding: '0.75rem',
-                  fontWeight: 600,
+                  fontWeight: 700,
                   fontSize: '0.875rem',
                   cursor: loading ? 'not-allowed' : 'pointer',
                   display: 'flex',
@@ -560,7 +565,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                   justifyContent: 'center',
                   gap: '0.5rem',
                   marginTop: '0.5rem',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+                  boxShadow: '0 4px 14px rgba(59, 24, 95, 0.3)',
                 }}
               >
                 {loading ? 'Creating Student Profile...' : 'Complete Registration & Sign In'}

@@ -116,18 +116,17 @@ export default function BatchPredictTab() {
     if (parsed.length === 0) {
       throw new Error('No valid student rows found in the CSV file.');
     }
-
     return parsed;
   };
 
-  const handleFileProcess = (file) => {
+  const handleFileUpload = (file) => {
     if (!file) return;
     if (!file.name.toLowerCase().endsWith('.csv')) {
       setError('Please upload a valid .csv file.');
       return;
     }
-
     setError('');
+
     const reader = new FileReader();
     reader.onload = async (e) => {
       try {
@@ -135,7 +134,6 @@ export default function BatchPredictTab() {
         const students = parseCSV(text);
         setBatchData(students);
         setFileName(file.name);
-        // Automatically run prediction on the uploaded file
         runBatch(students);
       } catch (err) {
         setError(err.message || 'Failed to parse CSV file.');
@@ -149,14 +147,14 @@ export default function BatchPredictTab() {
 
   const handleFileInputChange = (e) => {
     const file = e.target.files && e.target.files[0];
-    handleFileProcess(file);
+    handleFileUpload(file);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragActive(false);
     const file = e.dataTransfer.files && e.dataTransfer.files[0];
-    handleFileProcess(file);
+    handleFileUpload(file);
   };
 
   const handleDragOver = (e) => {
@@ -176,11 +174,11 @@ export default function BatchPredictTab() {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const runBatch = async (dataToPredict = batchData) => {
+  const runBatch = async (data = batchData) => {
     setLoading(true);
     setError('');
     try {
-      const res = await api.batchPredict(dataToPredict);
+      const res = await api.batchPredict(data);
       setResponse(res);
     } catch (err) {
       setError(err.message || 'Batch prediction failed.');
@@ -191,26 +189,21 @@ export default function BatchPredictTab() {
 
   const downloadTemplate = () => {
     const headers = [
-      'program',
-      'semester',
-      'attendance_pct',
-      'study_hours_per_day',
-      'internal_marks',
-      'previous_gpa',
-      'assignment_completion_pct',
-      'lms_logins',
-      'missed_deadlines',
-      'institution_id'
+      'program', 'semester', 'attendance_pct', 'study_hours_per_day',
+      'internal_marks', 'previous_gpa', 'assignment_completion_pct',
+      'lms_logins', 'missed_deadlines', 'institution_id'
     ];
-    const sampleRows = [
+    const demoRows = [
       ['Computer Science', '4', '92', '5.5', '88', '8.5', '95', '35', '0', '1'],
       ['Information Technology', '3', '75', '3.0', '68', '6.9', '78', '18', '2', '2'],
       ['Master of Computer Applications (MCA)', '2', '55', '1.5', '45', '5.2', '50', '8', '4', '3'],
-      ['Data Science & AI', '5', '88', '4.5', '82', '7.8', '90', '26', '1', '1']
+      ['Data Science & AI', '5', '88', '4.5', '82', '7.8', '90', '26', '1', '1'],
     ];
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...sampleRows.map((r) => r.join(','))].join('\n');
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...demoRows.map((e) => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
-    link.setAttribute('href', encodeURI(csvContent));
+    link.setAttribute('href', encodedUri);
     link.setAttribute('download', 'student_batch_template.csv');
     document.body.appendChild(link);
     link.click();
@@ -219,7 +212,10 @@ export default function BatchPredictTab() {
 
   const exportCSV = () => {
     if (!response || !response.results) return;
-    const headers = ['StudentID', 'Program', 'Semester', 'Attendance%', 'StudyHours', 'InternalMarks', 'PredictedScore', 'Grade', 'Risk%', 'Status'];
+    const headers = [
+      'StudentID', 'Program', 'Semester', 'Attendance%', 'StudyHours',
+      'InternalMarks', 'PredictedScore', 'Grade', 'Risk%', 'Status'
+    ];
     const rows = response.results.map((r) => [
       r.student_id,
       r.input.program,
@@ -249,11 +245,11 @@ export default function BatchPredictTab() {
       {/* Top Banner & Action Controls */}
       <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#f8fafc', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Users size={22} color="#38bdf8" />
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E152A', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+            <Users size={22} color="#501E7E" />
             Batch Score Predictor
           </h2>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+          <p style={{ fontSize: '0.875rem', color: '#68597A', margin: '0.25rem 0 0' }}>
             Upload a CSV file or use sample data to predict scores for multiple students at once.
           </p>
         </div>
@@ -282,10 +278,10 @@ export default function BatchPredictTab() {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         style={{
-          background: isDragActive ? 'rgba(37, 99, 235, 0.15)' : '#111d31',
-          border: isDragActive ? '2px dashed #38bdf8' : '1px dashed #2d4160',
+          background: isDragActive ? '#F3EBF9' : '#FAF6FD',
+          border: isDragActive ? '2px dashed #501E7E' : '1px dashed #C8B4DF',
           borderRadius: '12px',
-          padding: '1.5rem',
+          padding: '1.75rem',
           textAlign: 'center',
           transition: 'all 0.2s',
           cursor: 'pointer',
@@ -305,30 +301,30 @@ export default function BatchPredictTab() {
         />
         
         <div style={{ 
-          width: 48, 
-          height: 48, 
+          width: 52, 
+          height: 52, 
           borderRadius: '50%', 
-          background: 'rgba(56, 189, 248, 0.1)', 
-          border: '1px solid rgba(56, 189, 248, 0.25)', 
+          background: '#F1E8F9', 
+          border: '1px solid #DDCDEE', 
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',
-          color: '#38bdf8'
+          color: '#501E7E'
         }}>
-          <UploadCloud size={24} />
+          <UploadCloud size={26} />
         </div>
 
         <div>
-          <h3 style={{ margin: '0 0 0.25rem', fontSize: '0.9375rem', fontWeight: 700, color: '#f8fafc' }}>
+          <h3 style={{ margin: '0 0 0.25rem', fontSize: '1rem', fontWeight: 800, color: '#1E152A' }}>
             {fileName ? (
-              <span style={{ color: '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
-                <FileCheck size={18} color="#34d399" /> {fileName} ({batchData.length} students loaded)
+              <span style={{ color: '#501E7E', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}>
+                <FileCheck size={18} color="#16A34A" /> {fileName} ({batchData.length} students loaded)
               </span>
             ) : (
               'Upload CSV File for Batch Prediction'
             )}
           </h3>
-          <p style={{ margin: 0, fontSize: '0.8125rem', color: '#94a3b8' }}>
+          <p style={{ margin: 0, fontSize: '0.8125rem', color: '#68597A' }}>
             Click or drag & drop a .csv file containing student marks and attendance
           </p>
         </div>
@@ -339,12 +335,13 @@ export default function BatchPredictTab() {
               type="button" 
               onClick={handleResetSample}
               style={{
-                background: 'rgba(30, 41, 59, 0.8)',
-                color: '#cbd5e1',
-                border: '1px solid #334155',
-                padding: '0.35rem 0.75rem',
+                background: '#FFFFFF',
+                color: '#501E7E',
+                border: '1px solid #D8C7EB',
+                padding: '0.4rem 0.85rem',
                 borderRadius: '6px',
                 fontSize: '0.75rem',
+                fontWeight: 600,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -358,7 +355,7 @@ export default function BatchPredictTab() {
       </div>
 
       {error && (
-        <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#f87171', padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.875rem' }}>
+        <div style={{ background: '#FDE8E7', border: '1px solid #FCA5A5', color: '#D9383A', padding: '0.85rem 1.25rem', borderRadius: '0.75rem', fontSize: '0.875rem' }}>
           {error}
         </div>
       )}
@@ -367,33 +364,33 @@ export default function BatchPredictTab() {
       {response && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
           <div className="card" style={{ padding: '1rem' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Total Students</span>
-            <strong style={{ fontSize: '1.5rem', color: '#f8fafc', display: 'block' }}>{response.total_students}</strong>
+            <span style={{ fontSize: '0.75rem', color: '#68597A', fontWeight: 600 }}>Total Students</span>
+            <strong style={{ fontSize: '1.6rem', color: '#1E152A', display: 'block', fontWeight: 800 }}>{response.total_students}</strong>
           </div>
           <div className="card" style={{ padding: '1rem' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Average Predicted Score</span>
-            <strong style={{ fontSize: '1.5rem', color: '#38bdf8', display: 'block' }}>{response.average_predicted_score}</strong>
+            <span style={{ fontSize: '0.75rem', color: '#68597A', fontWeight: 600 }}>Average Predicted Score</span>
+            <strong style={{ fontSize: '1.6rem', color: '#501E7E', display: 'block', fontWeight: 800 }}>{response.average_predicted_score}</strong>
           </div>
           <div className="card" style={{ padding: '1rem' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Flagged At-Risk</span>
-            <strong style={{ fontSize: '1.5rem', color: response.at_risk_count > 0 ? '#f87171' : '#34d399', display: 'block' }}>
+            <span style={{ fontSize: '0.75rem', color: '#68597A', fontWeight: 600 }}>Flagged At-Risk</span>
+            <strong style={{ fontSize: '1.6rem', color: response.at_risk_count > 0 ? '#D9383A' : '#16A34A', display: 'block', fontWeight: 800 }}>
               {response.at_risk_count}
             </strong>
           </div>
           <div className="card" style={{ padding: '1rem' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Safe Students</span>
-            <strong style={{ fontSize: '1.5rem', color: '#34d399', display: 'block' }}>{response.safe_count}</strong>
+            <span style={{ fontSize: '0.75rem', color: '#68597A', fontWeight: 600 }}>Safe Students</span>
+            <strong style={{ fontSize: '1.6rem', color: '#16A34A', display: 'block', fontWeight: 800 }}>{response.safe_count}</strong>
           </div>
         </div>
       )}
 
       {/* Results Table */}
       <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--border-card)', background: 'var(--bg-card-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#f8fafc' }}>
+        <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid #E2D4F0', background: '#FAF6FD', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#1E152A', margin: 0 }}>
             {fileName ? `Prediction Results: ${fileName}` : 'Cohort Student Predictions Roster'}
           </h3>
-          <span style={{ fontSize: '0.75rem', color: '#93c5fd' }}>
+          <span style={{ fontSize: '0.75rem', color: '#501E7E', fontWeight: 700 }}>
             {batchData.length} records ready
           </span>
         </div>
@@ -418,7 +415,7 @@ export default function BatchPredictTab() {
               {response ? (
                 response.results.map((item) => (
                   <tr key={item.student_id}>
-                    <td style={{ fontWeight: 700, color: '#93c5fd' }}>{item.student_id}</td>
+                    <td style={{ fontWeight: 700, color: '#501E7E' }}>{item.student_id}</td>
                     <td>{item.input.program}</td>
                     <td>{item.input.semester}</td>
                     <td>{item.input.attendance_pct}%</td>
@@ -431,10 +428,10 @@ export default function BatchPredictTab() {
                       <span
                         className="badge"
                         style={{
-                          background: `${item.result.risk_color}22`,
-                          color: item.result.risk_color,
-                          border: `1px solid ${item.result.risk_color}55`,
-                          fontSize: '0.65rem',
+                          background: item.result.risk_status === 'SAFE' ? '#E6F8EE' : '#FDE8E7',
+                          color: item.result.risk_status === 'SAFE' ? '#16A34A' : '#D9383A',
+                          border: `1px solid ${item.result.risk_status === 'SAFE' ? 'rgba(22, 163, 74, 0.25)' : 'rgba(217, 56, 58, 0.25)'}`,
+                          fontSize: '0.68rem',
                         }}
                       >
                         {item.result.risk_status}
@@ -444,7 +441,7 @@ export default function BatchPredictTab() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="10" style={{ textAlign: 'center', padding: '2.5rem', color: 'var(--text-muted)' }}>
+                  <td colSpan="10" style={{ textAlign: 'center', padding: '2.5rem', color: '#68597A' }}>
                     Upload a CSV file or click 'Run Batch ({batchData.length})' to process predictions.
                   </td>
                 </tr>

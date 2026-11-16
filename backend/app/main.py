@@ -12,7 +12,7 @@ init_db()
 app = FastAPI(
     title=APP_TITLE,
     version=APP_VERSION,
-    description="MCA Final-Year Project: End-to-End Machine Learning Student Success Prediction & Early-Warning Advisory System."
+    description="StudIQ: Student Performance Analytics & Early-Warning Diagnostic System."
 )
 
 # CORS configuration
